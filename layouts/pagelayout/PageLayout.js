@@ -4,7 +4,7 @@ import NavBar from '../../components/nav-bar/NavBar';
 
 const PageLayout = ({ children }) => {
   return (
-    <div className="h-screen w-full">
+    <div className="w-full">
       <div className="bg-yellow-200">
         <NavBar />
       </div>

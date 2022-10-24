@@ -5,7 +5,7 @@ export const products = [
     color: 'White and black',
     imageSrc: '/img/products/bag.jpg',
     imageAlt: 'bagpack',
-    price: '$34',
+    price: 34,
     stock: false,
   },
   {
@@ -14,7 +14,7 @@ export const products = [
     color: 'White and black',
     imageSrc: '/img/products/bottle.jpg',
     imageAlt: 'Bottle',
-    price: '$8',
+    price: 8,
     stock: true,
   },
   {
@@ -23,7 +23,7 @@ export const products = [
     color: 'White and black',
     imageSrc: '/img/products/glasses.jpg',
     imageAlt: 'bottle',
-    price: '$89',
+    price: 89,
     stock: true,
   },
   {
@@ -32,7 +32,7 @@ export const products = [
     color: 'White and black',
     imageSrc: '/img/products/shirt.jpg',
     imageAlt: 'shirt',
-    price: '$29',
+    price: 29,
     stock: true,
   },
 ];

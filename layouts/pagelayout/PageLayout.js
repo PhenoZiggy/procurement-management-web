@@ -8,7 +8,7 @@ const PageLayout = ({ children }) => {
       <div className="bg-yellow-200">
         <NavBar />
       </div>
-      <div className="sticky top-0 bg-yellow-200">
+      <div className="sticky top-0 bg-yellow-200 z-10">
         <Menu />
       </div>
       <div className=" h-full">{children}</div>

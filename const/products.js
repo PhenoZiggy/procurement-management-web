@@ -1,0 +1,38 @@
+export const products = [
+  {
+    id: 1,
+    name: 'Mens backpack',
+    color: 'White and black',
+    imageSrc: '/img/products/bag.jpg',
+    imageAlt: 'bagpack',
+    price: '$34',
+    stock: false,
+  },
+  {
+    id: 2,
+    name: 'Water Bottle',
+    color: 'White and black',
+    imageSrc: '/img/products/bottle.jpg',
+    imageAlt: 'Bottle',
+    price: '$8',
+    stock: true,
+  },
+  {
+    id: 3,
+    name: 'Sun Glasses',
+    color: 'White and black',
+    imageSrc: '/img/products/glasses.jpg',
+    imageAlt: 'bottle',
+    price: '$89',
+    stock: true,
+  },
+  {
+    id: 3,
+    name: 'Shirt Mens',
+    color: 'White and black',
+    imageSrc: '/img/products/shirt.jpg',
+    imageAlt: 'shirt',
+    price: '$29',
+    stock: true,
+  },
+];

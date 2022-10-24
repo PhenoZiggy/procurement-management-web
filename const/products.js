@@ -27,7 +27,7 @@ export const products = [
     stock: true,
   },
   {
-    id: 3,
+    id: 4,
     name: 'Shirt Mens',
     color: 'White and black',
     imageSrc: '/img/products/shirt.jpg',

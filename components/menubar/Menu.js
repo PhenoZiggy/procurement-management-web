@@ -1,12 +1,13 @@
 import React from 'react';
 import { navigation } from '../../const/navigation';
+import Cart from '../cart/Cart';
 
 const Menu = () => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
   }
   return (
-    <div className="flex flex-1 items-center justify-center sticky top-0">
+    <div className="flex flex-1 items-center justify-around sticky top-0 py-2">
       <div className="hidden sm:ml-6 sm:block">
         <div className="flex space-x-4">
           {navigation.map((item) => (
@@ -20,6 +21,9 @@ const Menu = () => {
             </a>
           ))}
         </div>
+      </div>
+      <div className="hover:scale-110 duration-200 cursor-pointer">
+        <Cart />
       </div>
     </div>
   );

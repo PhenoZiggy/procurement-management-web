@@ -1,6 +1,11 @@
 import Image from 'next/image';
+import Store from '../../store/storeInitialize';
+import { observer } from 'mobx-react-lite';
 
-export default function Products({ products, header }) {
+const Products = ({ products, header }) => {
+  const AddToCart = (product) => {
+    Store.addItem(product);
+  };
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -30,9 +35,9 @@ export default function Products({ products, header }) {
               </div>
               <div className="mt-6">
                 <button
-                disabled={!product.stock}
+                  disabled={!product.stock}
                   onClick={() => {
-                    alert('clicked');
+                    AddToCart(product);
                   }}
                   className={`relative w-full flex items-center justify-center rounded-md border border-transparent py-2 px-8 text-sm font-medium text-white ${
                     product.stock ? 'bg-yellow-500 cursor-pointer' : 'bg-red-500 cursor-not-allowed'
@@ -48,4 +53,5 @@ export default function Products({ products, header }) {
       </div>
     </div>
   );
-}
+};
+export default observer(Products);

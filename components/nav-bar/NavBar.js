@@ -3,7 +3,6 @@ import { XIcon } from '@heroicons/react/outline';
 import Image from 'next/image';
 import { navigation } from '../../const/navigation';
 import Logo from '../../public/img/Shopify-Logo.png';
-import Cart from '../cart/Cart';
 import User from '../User/User';
 import Search from './Search';
 
@@ -38,13 +37,10 @@ export default function NavBar() {
               <div className="hidden md:block z-20">
                 <Search />
               </div>
-              <div className=" h-16 md:h-20">
+              <div className="h-16 md:h-20">
                 <Image src={Logo} layout="fill" objectFit="contain" alt="Logo" />
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <div className="hover:scale-110 duration-200 cursor-pointer">
-                  <Cart />
-                </div>
 
                 {/* Profile dropdown */}
                 <User />

@@ -10,7 +10,6 @@ import Search from './Search';
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
-
 export default function NavBar() {
   return (
     <Disclosure as="nav">
@@ -20,7 +19,7 @@ export default function NavBar() {
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="inline-flex z-30 items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -36,14 +35,16 @@ export default function NavBar() {
                 </Disclosure.Button>
               </div>
 
-              <div className='z-20'>
+              <div className="hidden md:block z-20">
                 <Search />
               </div>
               <div className=" h-16 md:h-20">
                 <Image src={Logo} layout="fill" objectFit="contain" alt="Logo" />
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <Cart />
+                <div className="hover:scale-110 duration-200 cursor-pointer">
+                  <Cart />
+                </div>
 
                 {/* Profile dropdown */}
                 <User />
@@ -59,7 +60,7 @@ export default function NavBar() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    item.current ? 'bg-gray-900 text-black' : 'text-gray-800 hover:bg-gray-700 hover:text-white',
                     'block px-3 py-2 rounded-md text-base font-medium'
                   )}
                   aria-current={item.current ? 'page' : undefined}
@@ -67,6 +68,9 @@ export default function NavBar() {
                   {item.name}
                 </Disclosure.Button>
               ))}
+              <div className="block md:hidden">
+                <Search />
+              </div>
             </div>
           </Disclosure.Panel>
         </>

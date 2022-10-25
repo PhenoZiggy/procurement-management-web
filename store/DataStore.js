@@ -1,9 +1,8 @@
 import { action, makeObservable, observable } from 'mobx';
-import { toJS } from 'mobx';
 
 class DataStore {
   ItemList = [];
-  state = [];
+  state = null;
   orderTotal = 0;
   itemTotal = 0;
   tax = null;
@@ -17,23 +16,30 @@ class DataStore {
       orderTotal: observable,
       itemTotal: observable,
       tax: observable,
+      state: observable,
       addItem: action,
       fetchAll: action,
       totalValue: action,
       removeItem: action,
+      clearError: action,
     });
   }
 
   addItem(item) {
+    this.state = null;
     if (!this.ItemList.find(({ id }) => id === item.id)) {
       let newItem = item;
       newItem.count = 1;
       this.ItemList.push(newItem);
+      this.state = { status: 'success', message: 'Item Added to the cart' };
     } else {
-      this.state.push({ success: false, message: 'Cannot add Duplicate Items' });
+      this.state = { status: 'error', message: 'Cannot Add duplicate Items' };
     }
-    this.state = [];
   }
+  clearError() {
+    this.state = null;
+  }
+
   fetchAll() {
     return this.ItemList;
   }

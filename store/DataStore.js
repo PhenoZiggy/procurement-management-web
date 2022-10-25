@@ -6,6 +6,7 @@ class DataStore {
   state = [];
   orderTotal = 0;
   itemTotal = 0;
+  tax = null;
   dataItem = null;
   isLoading = false;
 
@@ -15,6 +16,7 @@ class DataStore {
       dataItem: observable,
       orderTotal: observable,
       itemTotal: observable,
+      tax: observable,
       addItem: action,
       fetchAll: action,
       totalValue: action,
@@ -49,6 +51,7 @@ class DataStore {
     }
     this.itemTotal = subTotal;
     this.orderTotal = subTotal + fees;
+    this.tax = { shipping: shipping, tax: tax };
     return { shipping: shipping, tax: tax, total: fees + subTotal };
   }
 

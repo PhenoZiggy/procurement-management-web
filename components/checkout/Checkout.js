@@ -4,7 +4,6 @@ import { CheckCircleIcon, TrashIcon } from '@heroicons/react/solid';
 import { observer } from 'mobx-react-lite';
 import Store from '../../store/storeInitialize';
 
-
 const paymentMethods = [
   { id: 1, title: 'Credit Card', turnaround: '4–10 business days', price: '$5.00' },
   { id: 2, title: 'Cash on Delivery', turnaround: '2–5 business days', price: '$16.00' },
@@ -17,6 +16,8 @@ function classNames(...classes) {
 const Checkout = () => {
   const [paymentMethod, setSelectPaymentMethod] = useState(paymentMethods[0]);
   const [products, setProducts] = useState(Store.ItemList);
+  const [prices, setPrices] = useState({ subTotal: Store.itemTotal, total: Store.orderTotal });
+  const [tax, setTax] = useState(Store.tax);
 
   return (
     <div className="bg-gray-50">
@@ -296,19 +297,19 @@ const Checkout = () => {
               <dl className="space-y-6 border-t border-gray-200 py-6 px-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <dt className="text-sm">Subtotal</dt>
-                  <dd className="text-sm font-medium text-gray-900">$64.00</dd>
+                  <dd className="text-sm font-medium text-gray-900">${prices.subTotal}</dd>
                 </div>
                 <div className="flex items-center justify-between">
                   <dt className="text-sm">Shipping</dt>
-                  <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                  <dd className="text-sm font-medium text-gray-900">${tax && tax.shipping}</dd>
                 </div>
                 <div className="flex items-center justify-between">
                   <dt className="text-sm">Taxes</dt>
-                  <dd className="text-sm font-medium text-gray-900">$5.52</dd>
+                  <dd className="text-sm font-medium text-gray-900">${tax && tax.tax}</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                   <dt className="text-base font-medium">Total</dt>
-                  <dd className="text-base font-medium text-gray-900">$75.52</dd>
+                  <dd className="text-base font-medium text-gray-900">${prices.total}</dd>
                 </div>
               </dl>
 

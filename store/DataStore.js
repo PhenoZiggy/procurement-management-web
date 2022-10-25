@@ -4,6 +4,8 @@ import { toJS } from 'mobx';
 class DataStore {
   ItemList = [];
   state = [];
+  orderTotal = 0;
+  itemTotal = 0;
   dataItem = null;
   isLoading = false;
 
@@ -11,15 +13,20 @@ class DataStore {
     makeObservable(this, {
       ItemList: observable,
       dataItem: observable,
+      orderTotal: observable,
+      itemTotal: observable,
       addItem: action,
       fetchAll: action,
       totalValue: action,
+      removeItem: action,
     });
   }
 
   addItem(item) {
     if (!this.ItemList.find(({ id }) => id === item.id)) {
-      this.ItemList.push(item);
+      let newItem = item;
+      newItem.count = 1;
+      this.ItemList.push(newItem);
     } else {
       this.state.push({ success: false, message: 'Cannot add Duplicate Items' });
     }
@@ -32,12 +39,7 @@ class DataStore {
     let subTotal = 0;
     let fees = 0;
     this.ItemList.forEach((items) => {
-      console.log(toJS(items));
-      if (items.count) {
-        subTotal = subTotal + items.price * items.count;
-      } else {
-        subTotal = subTotal + items.price;
-      }
+      subTotal = subTotal + items.price * items.count;
     });
     if (shipping) {
       fees = fees + shipping;
@@ -45,6 +47,8 @@ class DataStore {
     if (tax) {
       fees = fees + tax;
     }
+    this.itemTotal = subTotal;
+    this.orderTotal = subTotal + fees;
     return { shipping: shipping, tax: tax, total: fees + subTotal };
   }
 
@@ -52,6 +56,17 @@ class DataStore {
     let qty = parseInt(count);
     let index = this.ItemList.findIndex((obj) => obj.id == item.id);
     this.ItemList[index].count = qty;
+  }
+  removeItem(item) {
+    let deductPrice = 0;
+    deductPrice = item.price * item.count;
+    this.orderTotal = this.orderTotal - deductPrice;
+    this.itemTotal = this.itemTotal - deductPrice;
+    this.ItemList.filter((item) => item.id !== item.id);
+    this.ItemList.splice(
+      this.ItemList.findIndex((a) => a.id === item.id),
+      1
+    );
   }
 }
 export default DataStore;

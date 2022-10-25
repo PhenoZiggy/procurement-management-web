@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Store from '../../store/storeInitialize';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const CartItems = () => {
   const [total, setTotal] = useState(Store.totalValue(10, 5));
@@ -12,11 +13,22 @@ const CartItems = () => {
     Store.totalValue(10, 5);
   };
 
+  const removeItem = (item) => {
+    Store.removeItem(item);
+  };
+  const router = useRouter();
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
-        <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+        <form
+          className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16"
+          onSubmit={(e) => {
+            e.preventDefault();
+            router.push('/checkout')
+          }}
+        >
           <section aria-labelledby="cart-heading" className="lg:col-span-7">
             <h2 id="cart-heading" className="sr-only">
               Items in your shopping cart
@@ -69,7 +81,13 @@ const CartItems = () => {
                         </select>
 
                         <div className="absolute top-0 right-0">
-                          <button type="button" className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500">
+                          <button
+                            type="button"
+                            className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
+                            onClick={() => {
+                              removeItem(product);
+                            }}
+                          >
                             <span className="sr-only">Remove</span>
                             <XIcon className="h-5 w-5" aria-hidden="true" />
                           </button>
@@ -101,7 +119,7 @@ const CartItems = () => {
             <dl className="mt-6 space-y-4">
               <div className="flex items-center justify-between">
                 <dt className="text-sm text-gray-600">Subtotal</dt>
-                <dd className="text-sm font-medium text-gray-900">${total && total.total}</dd>
+                <dd className="text-sm font-medium text-gray-900">${total && Store.itemTotal}</dd>
               </div>
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <dt className="flex items-center text-sm text-gray-600">
@@ -125,7 +143,7 @@ const CartItems = () => {
               </div>
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <dt className="text-base font-medium text-gray-900">Order total</dt>
-                <dd className="text-base font-medium text-gray-900">${total && total.total}</dd>
+                <dd className="text-base font-medium text-gray-900">${Store.orderTotal}</dd>
               </div>
             </dl>
 
@@ -134,7 +152,7 @@ const CartItems = () => {
                 type="submit"
                 className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
               >
-                Checkout
+                Checkout Now
               </button>
             </div>
           </section>

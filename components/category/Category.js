@@ -7,6 +7,7 @@ import Products from '../products/Products';
 import { observer } from 'mobx-react-lite';
 import { ItemsStore } from '../../store/storeInitialize';
 import CheckList from './CheckList';
+import { Pagination } from '@mui/material';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -16,11 +17,17 @@ const Category = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [select, setSelect] = useState([]);
+  const [number, setNumber] = useState(1);
+  const handleChange = (event, value) => {
+    setNumber(value);
+  };
+  const page = ItemsStore.filteredItems?.length / 8;
 
   useEffect(() => {
     ItemsStore.filterItems(select);
-    setProducts(ItemsStore?.filteredItems);
-  }, [select]);
+    const Items = ItemsStore.pagesForFilter(number);
+    setProducts(Items);
+  }, [select, number]);
 
   return (
     <div className="bg-white">
@@ -125,9 +132,10 @@ const Category = () => {
             </aside>
 
             {/* Product grid */}
-            <div className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
+            <div className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3 w-full flex flex-col items-center">
               {/* Replace with your content */}
               <Products products={products} />
+              <Pagination count={Math.ceil(page)} color="secondary" onChange={handleChange} />
               {/* /End replace */}
             </div>
           </div>

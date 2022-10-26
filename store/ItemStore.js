@@ -3,6 +3,7 @@ import { products } from '../const/products';
 
 class DataStore {
   ItemList = products;
+  ItemsPerPage = null;
   filteredItems = null;
 
   constructor() {
@@ -10,6 +11,7 @@ class DataStore {
       ItemList: observable,
       filteredItems: observable,
       filterItems: action,
+      pages: action,
     });
   }
 
@@ -23,6 +25,9 @@ class DataStore {
       });
     });
     this.filteredItems = Items;
+  }
+  pages(page_number = 1) {
+    return this.ItemList.slice((page_number - 1) * 8, page_number * 8);
   }
 }
 export default DataStore;

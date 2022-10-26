@@ -15,8 +15,8 @@ const Banner = ({ image, header, content, children }) => {
           </div>
         </div>
         <div className="flex-1 items-center justify-center -z-0">
-          <div className='relative h-96'>
-            <Image src={image} height="500" layout="fill" alt="Logo" />
+          <div className="relative h-96">
+            <Image src={image} layout="fill" alt="Logo" priority/>
           </div>
         </div>
       </div>

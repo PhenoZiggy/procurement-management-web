@@ -16,10 +16,11 @@ class DataStore {
   filterItems(filter) {
     let Items = [];
     filter.forEach((keywords) => {
-      let foundItem = this.ItemList.find((o) => o.categoris.id == keywords.value);
-      if (foundItem) {
-        Items.push(foundItem);
-      }
+      this.ItemList.forEach((item) => {
+        if (item.categoris.id == keywords.value) {
+          Items.push(item);
+        }
+      });
     });
     this.filteredItems = Items;
   }

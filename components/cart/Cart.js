@@ -1,7 +1,7 @@
 import React from 'react';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Store from '../../store/storeInitialize';
+import {Store} from '../../store/storeInitialize';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 

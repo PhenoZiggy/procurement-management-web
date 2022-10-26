@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { CheckCircleIcon, TrashIcon } from '@heroicons/react/solid';
 import { observer } from 'mobx-react-lite';
-import Store from '../../store/storeInitialize';
+import {Store} from '../../store/storeInitialize';
 
 const paymentMethods = [
   { id: 1, title: 'Credit Card', turnaround: '4–10 business days', price: '$5.00' },

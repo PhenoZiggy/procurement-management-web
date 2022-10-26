@@ -4,8 +4,18 @@ import PageLayout from '../../layouts/pagelayout/PageLayout';
 import ShopNow from '../../public/img/shopnow.png';
 import Products from '../../components/products/Products';
 import { useRouter } from 'next/router';
+import { ItemsStore } from '../../store/storeInitialize';
+import { Pagination } from '@mui/material';
+import { useState } from 'react';
 
 export default function Home() {
+  const handleChange = (event, value) => {
+    setNumber(value);
+  };
+
+  const [number, setNumber] = useState(1);
+  const Items = ItemsStore.pages(number);
+  const pages = ItemsStore.ItemList.length / 8;
   const router = useRouter();
   const header = 'You can shop anything here';
   const content = 'Limitless Items to shop here';
@@ -23,7 +33,10 @@ export default function Home() {
           </button>
         </Banner>
       </div>
-      <Products products={products} />
+      <div className="w-full flex flex-col items-center pb-10">
+        <Products products={Items} />
+        <Pagination count={Math.ceil(pages)} variant="outlined" color="secondary" onChange={handleChange} />
+      </div>
     </PageLayout>
   );
 }

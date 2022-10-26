@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Store from '../../store/storeInitialize';
+import {Store} from '../../store/storeInitialize';
 import { observer } from 'mobx-react-lite';
 
 const Products = ({ products, header }) => {

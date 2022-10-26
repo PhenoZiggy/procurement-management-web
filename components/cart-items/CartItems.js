@@ -1,6 +1,6 @@
 import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
-import Store from '../../store/storeInitialize';
+import {Store} from '../../store/storeInitialize';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { useRouter } from 'next/router';

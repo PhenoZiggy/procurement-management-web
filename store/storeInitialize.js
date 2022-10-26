@@ -1,4 +1,5 @@
 import DataStore from './DataStore';
+import ItemStore from './ItemStore';
 
-const Store = new DataStore();
-export default Store;
+export const Store = new DataStore();
+export const ItemsStore = new ItemStore();

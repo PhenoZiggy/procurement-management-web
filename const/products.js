@@ -1,6 +1,7 @@
 export const products = [
   {
     id: 1,
+    categoris: { id: 1, name: 'Plants and Machinery' },
     name: 'Mens backpack',
     color: 'White and black',
     imageSrc: '/img/products/bag.jpg',
@@ -10,6 +11,7 @@ export const products = [
   },
   {
     id: 2,
+    categoris: { id: 2, name: 'Products' },
     name: 'Water Bottle',
     color: 'White and black',
     imageSrc: '/img/products/bottle.jpg',
@@ -19,6 +21,7 @@ export const products = [
   },
   {
     id: 3,
+    categoris: { id: 3, name: 'Industrial' },
     name: 'Sun Glasses',
     color: 'White and black',
     imageSrc: '/img/products/glasses.jpg',
@@ -28,7 +31,8 @@ export const products = [
   },
   {
     id: 4,
-    name: 'Shirt Mens',
+    categoris: { id: 4, name: 'Materials' },
+    name: 'Shirts',
     color: 'White and black',
     imageSrc: '/img/products/shirt.jpg',
     imageAlt: 'shirt',

@@ -35,7 +35,7 @@ export default function Home() {
       </div>
       <div className="w-full flex flex-col items-center pb-10">
         <Products products={Items} />
-        <Pagination count={Math.ceil(pages)} variant="outlined" color="secondary" onChange={handleChange} />
+        <Pagination count={Math.ceil(pages)} color="secondary" onChange={handleChange} />
       </div>
     </PageLayout>
   );

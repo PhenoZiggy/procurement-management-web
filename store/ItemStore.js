@@ -26,8 +26,14 @@ class DataStore {
     });
     this.filteredItems = Items;
   }
+
   pages(page_number = 1) {
     return this.ItemList.slice((page_number - 1) * 8, page_number * 8);
+  }
+  pagesForFilter(page_number = 1) {
+    if (this.filteredItems) {
+      return this.filteredItems.slice((page_number - 1) * 8, page_number * 8);
+    }
   }
 }
 export default DataStore;

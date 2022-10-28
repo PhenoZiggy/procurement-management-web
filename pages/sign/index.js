@@ -1,24 +1,31 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import Logo from '../../public/img/Shopify-Logo.png';
-
+import { userStore } from '../../store/storeInitialize';
 const Index = () => {
   const [login, isLogin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [error, setError] = useState('');
+  const [name, setName] = useState('');
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
     if (login) {
       alert('you are loggin');
     } else {
       if (password === password2) {
-        alert('registering done');
+        userStore.registerUser(name, email, password);
       } else {
         setError('Password Missmatch!');
       }
     }
+    setError('');
+    setEmail('');
+    setPassword('');
+    setPassword2('');
+    setName('');
   };
   return (
     <div>
@@ -36,11 +43,25 @@ const Index = () => {
                       </div>
                       <form onSubmit={handleOnSubmit}>
                         <p className="mb-4 text-center text-red-600 font-bold">{login ? 'Please login to your account' : 'Register Here'}</p>
+                        {!login && (
+                          <div className="mb-4">
+                            <input
+                              type="text"
+                              className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                              placeholder="Your Name"
+                              required
+                              value={name}
+                              onChange={(e) => {
+                                setError('');
+                                setName(e.target.value);
+                              }}
+                            />
+                          </div>
+                        )}
                         <div className="mb-4">
                           <input
                             type="email"
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            id="exampleFormControlInput1"
                             placeholder="Email"
                             required
                             value={email}
@@ -54,7 +75,6 @@ const Index = () => {
                           <input
                             type="password"
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            id="exampleFormControlInput1"
                             placeholder="Password"
                             required
                             value={password}
@@ -69,7 +89,6 @@ const Index = () => {
                             <input
                               type="password"
                               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                              id="exampleFormControlInput1"
                               placeholder="Re Enter Your Password"
                               required
                               value={password2}
@@ -110,6 +129,7 @@ const Index = () => {
                               setEmail('');
                               setPassword('');
                               setPassword2('');
+                              setName('');
                             }}
                           >
                             {login ? 'Register' : 'Login'}

@@ -1,5 +1,7 @@
+import { Alert, Snackbar } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../../public/img/Shopify-Logo.png';
 import { userStore } from '../../store/storeInitialize';
 const Index = () => {
@@ -7,8 +9,27 @@ const Index = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState();
   const [name, setName] = useState('');
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (userStore.error) {
+      setOpen(true);
+      setSuccess(false);
+      setMessage(userStore.error);
+    } else if (userStore.response.status === 200) {
+      setMessage('Register Success');
+      setSuccess(true);
+      setOpen(true);
+      isLogin(true);
+    }
+  }, [userStore.error, userStore.response]);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +42,7 @@ const Index = () => {
         setError('Password Missmatch!');
       }
     }
-    setError('');
+    setMessage('');
     setEmail('');
     setPassword('');
     setPassword2('');
@@ -29,6 +50,11 @@ const Index = () => {
   };
   return (
     <div>
+      <Snackbar open={open} autoHideDuration={7000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+        <Alert onClose={handleClose} severity={success ? 'success' : 'error'} sx={{ width: '100%' }}>
+          {userStore.error ? userStore.error : message}
+        </Alert>
+      </Snackbar>
       <section className="h-full gradient-form bg-gray-200 md:h-screen">
         <div className="container py-12 px-6 h-full">
           <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
@@ -42,7 +68,7 @@ const Index = () => {
                         <h4 className="text-xl font-semibold mt-1 mb-12 pb-1">We are The Online Store Team</h4>
                       </div>
                       <form onSubmit={handleOnSubmit}>
-                        <p className="mb-4 text-center text-red-600 font-bold">{login ? 'Please login to your account' : 'Register Here'}</p>
+                        <p className="mb-4 text-center text-green-600 font-bold">{login ? 'Please login to your account' : 'Register Here'}</p>
                         {!login && (
                           <div className="mb-4">
                             <input
@@ -52,7 +78,7 @@ const Index = () => {
                               required
                               value={name}
                               onChange={(e) => {
-                                setError('');
+                                setMessage('');
                                 setName(e.target.value);
                               }}
                             />
@@ -66,7 +92,7 @@ const Index = () => {
                             required
                             value={email}
                             onChange={(e) => {
-                              setError('');
+                              setMessage('');
                               setEmail(e.target.value);
                             }}
                           />
@@ -79,7 +105,7 @@ const Index = () => {
                             required
                             value={password}
                             onChange={(e) => {
-                              setError('');
+                              setMessage('');
                               setPassword(e.target.value);
                             }}
                           />
@@ -93,7 +119,7 @@ const Index = () => {
                               required
                               value={password2}
                               onChange={(e) => {
-                                setError('');
+                                setMessage('');
                                 setPassword2(e.target.value);
                               }}
                             />
@@ -113,7 +139,7 @@ const Index = () => {
                               Forgot password?
                             </a>
                           )}
-                          <p className="text-red-500">{error}</p>
+                          <p className={success ? 'text-green-700' : 'text-red-500'}>{message}</p>
                         </div>
 
                         <div className="flex items-center justify-between pb-6">
@@ -125,7 +151,7 @@ const Index = () => {
                             data-mdb-ripple-color="light"
                             onClick={() => {
                               isLogin(!login);
-                              setError('');
+                              setMessage('');
                               setEmail('');
                               setPassword('');
                               setPassword2('');
@@ -163,4 +189,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default observer(Index);

@@ -1,34 +1,67 @@
-// import axios from 'axios';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { userStore } from '../store/storeInitialize';
 
-// const setAxiosInterceptor = () => {
-//   axios.interceptors.request.use(
-//     async (config) => {
-//       let sessionResponse = null;
-//       let accessToken = '';
-//       let refreshToken = '';
+let authToken;
+let refresh;
+let baseURL;
 
-//       try {
-//         accessToken = sessionResponse?.accessToken;
-//         idToken = sessionResponse?.idToken;
-//       } catch (error) {
-//         console.error(error.toString());
-//       }
-//       const configWithHeaders = config;
-//       if (configWithHeaders.headers) {
-//         configWithHeaders.headers['Content-Type'] = 'application/json';
-//         configWithHeaders.headers.Accept = 'text/plain';
-//         if (refreshToken) {
-//           configWithHeaders.headers.Identity = idToken;
-//         }
-//         if (accessToken) {
-//           configWithHeaders.headers.Authorization = `Bearer ${accessToken}`;
-//         }
-//       }
-//       return configWithHeaders;
-//     },
-//     (error) => {
-//       Promise.reject(error);
-//     }
-//   );
-// };
-// export default setAxiosInterceptor;
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  authToken = localStorage.getItem('token');
+  refresh = localStorage.getItem('refreshToken');
+  baseURL = process.env.NEXT_PUBLIC_API_URL;
+}
+
+const axiosInstance = axios.create({
+  headers: {
+    authorization: `Bearer ${authToken}`,
+  },
+});
+
+axiosInstance.interceptors.request.use(async (req) => {
+  let authToken = localStorage.getItem('token');
+  if (authToken) {
+    let authToken = localStorage.getItem('token');
+    req.headers.authorization = `Bearer ${authToken}`;
+    return req;
+  } else {
+    localStorage.clear();
+    userStore.setError('Please Login');
+  }
+});
+
+axiosInstance.interceptors.response.use(
+  async (res) => {
+    return res;
+  },
+  async (error) => {
+    let newToken = '';
+    let newrefresh = localStorage.getItem('refreshToken');
+    if (error.response.status === 403) {
+      axios
+        .get(`${baseURL}auth/refresh`, {
+          headers: {
+            authorization: `Refresh ${newrefresh}`,
+          },
+        })
+        .then((res) => {
+          newToken = res.data.accessToken;
+          localStorage.setItem('token', `${res.data.accessToken}`);
+          error.config.headers.authorization = `Bearer ${newToken}`;
+          return axiosInstance(error.config);
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            userStore.setError('Token not Provided! Please Login Again!');
+          } else if (error.response.status === 403) {
+            userStore.setError('Provided token is wrong or expired! Please Login Again!');
+          }
+        });
+    } else {
+      return Promise.reject(error);
+    }
+  }
+);
+
+export default axiosInstance;

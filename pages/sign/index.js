@@ -1,9 +1,11 @@
 import { Alert, Snackbar } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Logo from '../../public/img/Shopify-Logo.png';
 import { userStore } from '../../store/storeInitialize';
+
 const Index = () => {
   const [login, isLogin] = useState(false);
   const [email, setEmail] = useState('');
@@ -17,6 +19,8 @@ const Index = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const router = useRouter();
 
   useEffect(() => {
     if (userStore.error) {
@@ -34,6 +38,7 @@ const Index = () => {
       setSuccess(true);
       setOpen(true);
       isLogin(true);
+      router.push('/');
     }
   }, [userStore.error, userStore.response, userStore.loginRsponse]);
 

@@ -17,6 +17,7 @@ const User = () => {
     try {
       if (Refresh) {
         const response = userStore.setCurretUser();
+      } else {
         localStorage.clear();
       }
     } catch (error) {}
@@ -35,6 +36,8 @@ const User = () => {
     if (userStore.currentUser?.data) {
       setUserData(userStore.currentUser.data.response);
       console.log(userData?.image.url);
+    } else {
+      setUserData(null);
     }
   }, [userStore.currentUser, userStore.currentUser]);
 

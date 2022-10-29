@@ -11,7 +11,7 @@ class UserStore {
   constructor() {
     makeObservable(this, {
       loginRsponse: observable,
-      currentUser: observable,
+      currentUser: observable.deep,
       error: observable,
       isLoading: observable,
       response: observable,
@@ -86,12 +86,11 @@ class UserStore {
     try {
       this.setIsLoading(true);
       const response = await userServices.logoutUser();
-      if (response) {
-        localStorage.clear();
-      }
     } catch (error) {
     } finally {
       this.setIsLoading(false);
+      this.currentUser = null;
+      localStorage.clear();
     }
   }
 

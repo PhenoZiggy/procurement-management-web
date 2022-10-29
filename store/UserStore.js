@@ -22,7 +22,7 @@ class UserStore {
   }
   async registerUser(name, email, password) {
     try {
-      thi.setIsLoading(true);
+      this.setIsLoading(true);
       this.setError('');
       this.response = '';
       const response = await userServices.registerUser(name, email, password);

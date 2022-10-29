@@ -6,20 +6,23 @@ class UserStore {
   loginRsponse = '';
   error = '';
   isLoading = false;
+  currentUser = null;
 
   constructor() {
     makeObservable(this, {
       loginRsponse: observable,
+      currentUser: observable,
       error: observable,
       isLoading: observable,
       response: observable,
       setIsLoading: action,
       setError: action,
+      setCurretUser: action,
     });
   }
   async registerUser(name, email, password) {
     try {
-      this.setIsLoading(true);
+      thi.setIsLoading(true);
       this.setError('');
       this.response = '';
       const response = await userServices.registerUser(name, email, password);
@@ -62,6 +65,36 @@ class UserStore {
       this.setIsLoading(false);
     }
   }
+
+  async setCurretUser() {
+    try {
+      this.setIsLoading(true);
+      const resposne = await userServices.currentUser();
+      if (resposne) {
+        if (resposne.data.response.token === 'loggedOut') {
+          localStorage.clear();
+        }
+        this.currentUser = resposne;
+      }
+    } catch (error) {
+    } finally {
+      this.setIsLoading(false);
+    }
+  }
+
+  async logOutUser() {
+    try {
+      this.setIsLoading(true);
+      const response = await userServices.logoutUser();
+      if (response) {
+        localStorage.clear();
+      }
+    } catch (error) {
+    } finally {
+      this.setIsLoading(false);
+    }
+  }
+
   async testAuth() {
     try {
       this.setIsLoading(true);

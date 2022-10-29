@@ -15,7 +15,9 @@ const Menu = () => {
           {navigation.map((item) => (
             <button
               key={item.name}
-              onClick={()=>{ router.push(item.href)}}
+              onClick={() => {
+                router.push(item.href);
+              }}
               className={classNames(item.current ? 'bg-[#3AA39F] text-white' : 'text-gray-500 hover:bg-yellow-500 hover:text-white', 'px-3 py-2 rounded-md text-sm font-bold')}
               aria-current={item.current ? 'page' : undefined}
             >

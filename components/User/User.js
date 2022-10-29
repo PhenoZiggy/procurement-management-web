@@ -12,6 +12,10 @@ const User = () => {
   const router = useRouter();
   const [userData, setUserData] = useState();
 
+  const routeToLogin = () => {
+    router.push('/sign');
+  };
+
   const getUser = async () => {
     const Refresh = localStorage.getItem('refreshToken');
     try {
@@ -53,12 +57,7 @@ const User = () => {
             </>
           )}
           {!userData && (
-            <div
-              className="font-bold hover:scale-105 duration-300"
-              onClick={() => {
-                router.push('/sign');
-              }}
-            >
+            <div className="font-bold hover:scale-105 duration-300" onClick={routeToLogin}>
               Sign in
             </div>
           )}

@@ -3,7 +3,7 @@ import { userServices } from '../pages/api/serviceInitializer';
 
 class UserStore {
   response = '';
-  loginRsponse = '';
+  loginRsponse = null;
   error = '';
   isLoading = false;
   currentUser = null;
@@ -85,6 +85,7 @@ class UserStore {
   async logOutUser() {
     try {
       this.setIsLoading(true);
+      this.loginRsponse = null;
       const response = await userServices.logoutUser();
     } catch (error) {
     } finally {

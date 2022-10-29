@@ -29,12 +29,18 @@ const Index = () => {
       setOpen(true);
       isLogin(true);
     }
-  }, [userStore.error, userStore.response]);
+    if (userStore.loginRsponse) {
+      setMessage('Log in Success!');
+      setSuccess(true);
+      setOpen(true);
+      isLogin(true);
+    }
+  }, [userStore.error, userStore.response, userStore.loginRsponse]);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     if (login) {
-      alert('you are loggin');
+      userStore.loginUser(email, password);
     } else {
       if (password === password2) {
         userStore.registerUser(name, email, password);

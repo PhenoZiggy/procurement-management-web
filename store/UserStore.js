@@ -3,11 +3,13 @@ import { userServices } from '../pages/api/serviceInitializer';
 
 class UserStore {
   response = '';
+  loginRsponse = '';
   error = '';
   isLoading = false;
 
   constructor() {
     makeObservable(this, {
+      loginRsponse: observable,
       error: observable,
       isLoading: observable,
       response: observable,
@@ -37,6 +39,39 @@ class UserStore {
   }
   setError(error) {
     this.error = error;
+  }
+
+  async loginUser(email, password) {
+    try {
+      this.setIsLoading(true);
+      this.setError('');
+      this.loginRsponse = '';
+      const response = await userServices.loginUser(email, password);
+      this.loginRsponse = response;
+      localStorage.setItem('token', `${response.data.token}`);
+      localStorage.setItem('refreshToken', `${response.data.refresh}`);
+    } catch (error) {
+      if (error.response.status === 401) {
+        this.setError('Wrong Password');
+      } else if (error.response.status === 404) {
+        this.setError('User not exist');
+      } else {
+        throw new Error(error.toString());
+      }
+    } finally {
+      this.setIsLoading(false);
+    }
+  }
+  async testAuth() {
+    try {
+      this.setIsLoading(true);
+      this.setError('');
+      const response = await userServices.testAuth();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.setIsLoading(false);
+    }
   }
 }
 export default UserStore;

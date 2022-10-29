@@ -9,6 +9,9 @@ class UserServices {
   constructor() {
     makeObservable(this, {
       registerUser: action,
+      loginUser: action,
+      currentUser: action,
+      logoutUser: action,
     });
   }
 
@@ -17,6 +20,12 @@ class UserServices {
   }
   async loginUser(email, password) {
     return axios.post(`${this.baseURL}${this.endPointURL}/login/`, { email, password });
+  }
+  async currentUser() {
+    return axiosInstance.get(`${this.baseURL}${this.endPointURL}/currentuser/`);
+  }
+  async logoutUser() {
+    return axiosInstance.get(`${this.baseURL}${this.endPointURL}/logout/`);
   }
   async testAuth() {
     return axiosInstance.post(`${this.baseURL}${this.endPointURL}/test/`);

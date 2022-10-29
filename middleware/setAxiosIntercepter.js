@@ -21,9 +21,11 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (req) => {
   let authToken = localStorage.getItem('token');
+  let reFresh = localStorage.getItem('refreshToken');
   if (authToken) {
     let authToken = localStorage.getItem('token');
     req.headers.authorization = `Bearer ${authToken}`;
+    req.headers.Refresh = `Bearer ${reFresh}`;
     return req;
   } else {
     localStorage.clear();

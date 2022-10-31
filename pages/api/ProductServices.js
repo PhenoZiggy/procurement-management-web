@@ -13,8 +13,14 @@ class ProductServices {
   }
 
   async addProduct(product) {
-    console.log('test');
     return axiosInstance.post(`${this.baseURL}${this.endPointURL}/create/`, product);
+  }
+  async getAll() {
+    return axios.get(`${this.baseURL}${this.endPointURL}/get-all/`);
+  }
+  async deleteProduct(id) {
+    console.log("test")
+    return axios.delete(`${this.baseURL}${this.endPointURL}/delete/${id}`);
   }
 }
 

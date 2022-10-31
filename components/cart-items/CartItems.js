@@ -38,7 +38,7 @@ const CartItems = () => {
               {Store.ItemList.map((product, productIdx) => (
                 <li key={product.id} className="flex py-6 sm:py-10">
                   <div className="flex-shrink-0">
-                    <Image src={product.imageSrc} alt={product.imageAlt} className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48" height="96" width="96" />
+                    <img src={product.imageSrc} alt={product.imageAlt} className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48" height="96" width="96" />
                   </div>
 
                   <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
@@ -55,7 +55,7 @@ const CartItems = () => {
                           <p className="text-gray-500">{product.color}</p>
                           {product.size ? <p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">{product.size}</p> : null}
                         </div>
-                        <p className="mt-1 text-sm font-medium text-gray-900">${product.price}</p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">Rs{product.price}</p>
                       </div>
 
                       <div className="mt-4 sm:mt-0 sm:pr-9">
@@ -119,7 +119,7 @@ const CartItems = () => {
             <dl className="mt-6 space-y-4">
               <div className="flex items-center justify-between">
                 <dt className="text-sm text-gray-600">Subtotal</dt>
-                <dd className="text-sm font-medium text-gray-900">${total && Store.itemTotal}</dd>
+                <dd className="text-sm font-medium text-gray-900">Rs{total && Store.itemTotal}</dd>
               </div>
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <dt className="flex items-center text-sm text-gray-600">
@@ -129,7 +129,7 @@ const CartItems = () => {
                     <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
                   </a>
                 </dt>
-                <dd className="text-sm font-medium text-gray-900">${total && total.shipping}</dd>
+                <dd className="text-sm font-medium text-gray-900">Rs{total && total.shipping}</dd>
               </div>
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <dt className="flex text-sm text-gray-600">
@@ -139,11 +139,11 @@ const CartItems = () => {
                     <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
                   </a>
                 </dt>
-                <dd className="text-sm font-medium text-gray-900">${total && total.tax}</dd>
+                <dd className="text-sm font-medium text-gray-900">Rs{total && total.tax}</dd>
               </div>
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <dt className="text-base font-medium text-gray-900">Order total</dt>
-                <dd className="text-base font-medium text-gray-900">${Store.orderTotal}</dd>
+                <dd className="text-base font-medium text-gray-900">Rs{Store.orderTotal}</dd>
               </div>
             </dl>
 

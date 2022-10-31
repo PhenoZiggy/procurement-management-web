@@ -282,13 +282,13 @@ const Checkout = () => {
                               {product.title}
                             </a>
                           </h4>
-                          <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                          <p className="mt-1 text-sm text-gray-500">{product.name}</p>
                           <p className="mt-1 text-sm text-gray-500">{product.size}</p>
                         </div>
                       </div>
 
                       <div className="flex flex-1 items-end justify-between pt-2">
-                        <p className="mt-1 text-sm font-medium text-gray-900">${product.price}</p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">Rs{product.price}</p>
                       </div>
                     </div>
                   </li>
@@ -297,19 +297,19 @@ const Checkout = () => {
               <dl className="space-y-6 border-t border-gray-200 py-6 px-4 sm:px-6">
                 <div className="flex items-center justify-between">
                   <dt className="text-sm">Subtotal</dt>
-                  <dd className="text-sm font-medium text-gray-900">${prices.subTotal}</dd>
+                  <dd className="text-sm font-medium text-gray-900">Rs{prices.subTotal}</dd>
                 </div>
                 <div className="flex items-center justify-between">
                   <dt className="text-sm">Shipping</dt>
-                  <dd className="text-sm font-medium text-gray-900">${tax && tax.shipping}</dd>
+                  <dd className="text-sm font-medium text-gray-900">Rs{tax && tax.shipping}</dd>
                 </div>
                 <div className="flex items-center justify-between">
                   <dt className="text-sm">Taxes</dt>
-                  <dd className="text-sm font-medium text-gray-900">${tax && tax.tax}</dd>
+                  <dd className="text-sm font-medium text-gray-900">Rs{tax && tax.tax}</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                   <dt className="text-base font-medium">Total</dt>
-                  <dd className="text-base font-medium text-gray-900">${prices.total}</dd>
+                  <dd className="text-base font-medium text-gray-900">Rs{prices.total}</dd>
                 </div>
               </dl>
 

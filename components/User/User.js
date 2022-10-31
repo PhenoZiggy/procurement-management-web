@@ -43,6 +43,7 @@ const User = () => {
     } else {
       setUserData(null);
     }
+    
   }, [userStore.currentUser, userStore.currentUser]);
 
   return (

@@ -73,8 +73,9 @@ class UserStore {
       if (resposne) {
         if (resposne.data.response.token === 'loggedOut') {
           localStorage.clear();
+        } else {
+          this.currentUser = resposne;
         }
-        this.currentUser = resposne;
       }
     } catch (error) {
     } finally {

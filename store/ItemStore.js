@@ -1,18 +1,36 @@
 import { action, makeObservable, observable } from 'mobx';
 import { products } from '../const/products';
+import { productServices } from '../pages/api/serviceInitializer';
 
 class DataStore {
   ItemList = products;
   ItemsPerPage = null;
   filteredItems = null;
+  isLoading = false;
+  itemResponse = null;
 
   constructor() {
     makeObservable(this, {
       ItemList: observable,
+      isLoading: observable,
       filteredItems: observable,
+      itemResponse: observable.deep,
       filterItems: action,
       pages: action,
     });
+  }
+
+  async addProduct(product) {
+    try {
+      this.setIsloading(true);
+      this.itemResponse = null;
+      const response = await productServices.addProduct(product);
+      this.itemResponse = response;
+    } catch (error) {
+      this.itemResponse = error;
+    } finally {
+      this.setIsloading(false);
+    }
   }
 
   filterItems(filter) {
@@ -34,6 +52,9 @@ class DataStore {
     if (this.filteredItems) {
       return this.filteredItems.slice((page_number - 1) * 8, page_number * 8);
     }
+  }
+  setIsloading(value) {
+    this.isLoading = value;
   }
 }
 export default DataStore;

@@ -1,6 +1,8 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { BackspaceIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
+import { observer } from 'mobx-react-lite';
+import { ItemsStore, userStore } from '../../store/storeInitialize';
 
 const navigation = [
   { name: 'Add Products', href: '/products', icon: PlusIcon, current: true },
@@ -17,6 +19,11 @@ function classNames(...classes) {
 
 const AdminPageLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [loading, isLoading] = useState(false);
+  useEffect(() => {
+    isLoading(userStore.isLoading || ItemsStore.isLoading);
+  }, [userStore.isLoading, ItemsStore.isLoading]);
 
   return (
     <>
@@ -186,7 +193,7 @@ const AdminPageLayout = ({ children }) => {
           </main>
         </div>
       </div>
-    </>
+    </> 
   );
 };
-export default AdminPageLayout;
+export default observer(AdminPageLayout);

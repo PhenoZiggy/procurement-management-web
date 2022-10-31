@@ -1,9 +1,111 @@
+import { CircularProgress } from '@mui/material';
+import { Stack } from '@mui/system';
+import { observer } from 'mobx-react-lite';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import AdminLayout from '../../layouts/pagelayout/AdminLayout';
+import { ItemsStore } from '../../store/storeInitialize';
+import firebaseUpload from '../../utils/firebaseUpload';
 
 const Index = () => {
+  const [productName, setProductName] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [category, setCategory] = useState();
+  //file states
+  const [file, setFile] = useState(null);
+  const [url, setURL] = useState('');
+  const [percentage, setPercentage] = useState(null);
+  //file states ending here
+
+  const handleOnSubmit = async () => {
+    const product = {
+      name: productName,
+      description: description,
+      price: price,
+      stock: true,
+      quantity: quantity,
+      imageSrc: url[0],
+      imageAlt: productName,
+      categories: category,
+    };
+    try {
+      await ItemsStore.addProduct(product);
+    } catch (error) {
+    } finally {
+      setProductName('');
+      setDescription('');
+      setPrice('');
+      setQuantity('');
+      setCategory('');
+      setFile(null);
+      setURL('');
+      setPercentage(null);
+    }
+  };
+
+  const handleChange = (e) => {
+    const newFiles = [];
+    for (let j = 0; j < event.target.files.length; j++) {
+      newFiles.push(event.target.files[j]);
+    }
+    setFile(newFiles);
+  };
+
+  //File upload
+  const handleUpload = async (event) => {
+    event.preventDefault();
+    ItemsStore.setIsloading(true);
+    if (file) {
+      await firebaseUpload(file, setPercentage, setURL, 'products');
+    } else {
+      toast('Please select a file', { hideProgressBar: true, autoClose: 2000, type: 'error' });
+    }
+  };
+
+  const categoryHandler = (e) => {
+    const value = e.target.value;
+    switch (value) {
+      case '1':
+        setCategory({ value: 1, label: 'Plants and Machinery', id: 1 });
+        break;
+      case '2':
+        setCategory({ value: 2, label: 'Products', id: 2 });
+        break;
+      case '3':
+        setCategory({ value: 3, label: 'Industrial', id: 3 });
+        break;
+      case '4':
+        setCategory({ value: 4, label: 'Materials', id: 4 });
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    if (url) {
+      ItemsStore.setIsloading(false);
+      setPercentage(null);
+      handleOnSubmit();
+    }
+  }, [url]);
+
+  useEffect(() => {
+    if (ItemsStore.itemResponse) {
+      if (ItemsStore.itemResponse.status == 200) {
+        toast('Item Added Successfull', { hideProgressBar: true, autoClose: 5000, type: 'success' });
+      } else {
+        console.log(ItemsStore.itemResponse.message);
+        toast(ItemsStore.itemResponse.message, { hideProgressBar: true, autoClose: 5000, type: 'error' });
+      }
+    }
+  }, [ItemsStore.itemResponse]);
+
   return (
     <AdminLayout>
-      <form className="space-y-8 divide-y divide-gray-200">
+      <form className="space-y-8 divide-y divide-gray-200" onSubmit={handleUpload}>
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div className="space-y-6 sm:space-y-5">
             <div className="space-y-6 sm:space-y-5">
@@ -16,8 +118,13 @@ const Index = () => {
                     <input
                       type="text"
                       name="username"
+                      required
                       id="username"
                       autoComplete="username"
+                      onChange={(e) => {
+                        setProductName(e.target.value);
+                      }}
+                      value={productName}
                       className="block py-2 w-full border border-gray-400 min-w-0 flex-1 rounded-none rounded-r-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
@@ -33,21 +140,26 @@ const Index = () => {
                     id="about"
                     name="about"
                     rows={3}
+                    required
                     className="block p-3 w-full max-w-lg rounded-md border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     defaultValue={''}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                    }}
+                    value={description}
                   />
                   <p className="mt-2 text-sm text-gray-500">Write a few sentences about the product.</p>
                 </div>
               </div>
 
-              <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+              <div className={`sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5`}>
                 <label htmlFor="cover-photo" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                   Upload Photo
                 </label>
                 <div className="mt-1 sm:col-span-2 sm:mt-0">
-                  <div className="flex max-w-lg justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+                  <div className={`flex max-w-lg justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6 ${file ? 'bg-green-50' : 'bg-white'}`}>
                     <div className="space-y-1 text-center">
-                      <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                      <svg className={`mx-auto h-12 w-12 ${file ? 'text-green-500' : 'text-gray-400'}`} stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                         <path
                           d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
                           strokeWidth={2}
@@ -61,7 +173,7 @@ const Index = () => {
                           className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
                         >
                           <span>Upload a file</span>
-                          <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                          <input id="file-upload" name="file-upload" className="sr-only" type="file" onChange={handleChange} required />
                         </label>
                         <p className="pl-1">or drag and drop</p>
                       </div>
@@ -70,6 +182,11 @@ const Index = () => {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className={`flex justify-center ${percentage ? 'block' : 'hide'}`}>
+              <Stack spacing={2} direction="row">
+                <CircularProgress variant="determinate" value={percentage} />
+              </Stack>
             </div>
           </div>
 
@@ -85,11 +202,15 @@ const Index = () => {
                 </label>
                 <div className="mt-1 sm:col-span-2 sm:mt-0">
                   <input
-                    type="text"
+                    type="number"
                     name="first-name"
                     id="first-name"
                     autoComplete="given-name"
                     className="block w-full max-w-lg py-2  border-2 rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm"
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                    }}
+                    value={price}
                   />
                 </div>
               </div>
@@ -100,11 +221,15 @@ const Index = () => {
                 </label>
                 <div className="mt-1 sm:col-span-2 sm:mt-0">
                   <input
-                    type="text"
+                    type="number"
                     name="last-name"
                     id="last-name"
                     autoComplete="family-name"
                     className="block w-full max-w-lg border border-gray-400 rounded-md py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm"
+                    onChange={(e) => {
+                      setQuantity(e.target.value);
+                    }}
+                    value={quantity}
                   />
                 </div>
               </div>
@@ -126,25 +251,53 @@ const Index = () => {
                         <p className="text-sm text-gray-500">Choose product category here</p>
                         <div className="mt-4 space-y-4">
                           <div className="flex items-center">
-                            <input id="1" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                            <input
+                              id="1"
+                              name="push-notifications"
+                              type="radio"
+                              value="1"
+                              onChange={categoryHandler}
+                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
                             <label htmlFor="1" className="ml-3 block text-sm font-medium text-gray-700">
                               Plants and Machinery
                             </label>
                           </div>
                           <div className="flex items-center">
-                            <input id="2" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                            <input
+                              id="2"
+                              name="push-notifications"
+                              type="radio"
+                              value="2"
+                              onChange={categoryHandler}
+                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
                             <label htmlFor="2" className="ml-3 block text-sm font-medium text-gray-700">
                               Products
                             </label>
                           </div>
                           <div className="flex items-center">
-                            <input id="3" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                            <input
+                              id="3"
+                              name="push-notifications"
+                              type="radio"
+                              value="3"
+                              onChange={categoryHandler}
+                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
                             <label htmlFor="3" className="ml-3 block text-sm font-medium text-gray-700">
                               Industrial
                             </label>
                           </div>
                           <div className="flex items-center">
-                            <input id="4" name="push-notifications" type="radio" className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                            <input
+                              id="4"
+                              name="push-notifications"
+                              type="radio"
+                              value="4"
+                              onChange={categoryHandler}
+                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
                             <label htmlFor="4" className="ml-3 block text-sm font-medium text-gray-700">
                               Materials
                             </label>
@@ -179,4 +332,4 @@ const Index = () => {
     </AdminLayout>
   );
 };
-export default Index;
+export default observer(Index);

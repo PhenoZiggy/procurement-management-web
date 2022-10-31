@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Menu from '../../components/menubar/Menu';
 import NavBar from '../../components/nav-bar/NavBar';
 import { observer } from 'mobx-react-lite';
-import {Store} from '../../store/storeInitialize';
+import { Store } from '../../store/storeInitialize';
 
 const PageLayout = ({ children }) => {
   const [open, setOpen] = useState(false);
@@ -26,7 +26,7 @@ const PageLayout = ({ children }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div className="bg-yellow-200">
         <NavBar />
       </div>

@@ -1,6 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import { Stack } from '@mui/system';
 import { observer } from 'mobx-react-lite';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AdminLayout from '../../layouts/pagelayout/AdminLayout';
@@ -8,6 +9,7 @@ import { ItemsStore } from '../../store/storeInitialize';
 import firebaseUpload from '../../utils/firebaseUpload';
 
 const Index = () => {
+  const router = useRouter();
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -15,7 +17,7 @@ const Index = () => {
   const [category, setCategory] = useState();
   //file states
   const [file, setFile] = useState(null);
-  const [url, setURL] = useState('');
+  const [url, setURL] = useState();
   const [percentage, setPercentage] = useState(null);
   //file states ending here
 
@@ -40,12 +42,12 @@ const Index = () => {
       setQuantity('');
       setCategory('');
       setFile(null);
-      setURL('');
+      setURL(null);
       setPercentage(null);
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (event) => {
     const newFiles = [];
     for (let j = 0; j < event.target.files.length; j++) {
       newFiles.push(event.target.files[j]);
@@ -61,6 +63,7 @@ const Index = () => {
       await firebaseUpload(file, setPercentage, setURL, 'products');
     } else {
       toast('Please select a file', { hideProgressBar: true, autoClose: 2000, type: 'error' });
+      ItemsStore.setIsloading(false);
     }
   };
 

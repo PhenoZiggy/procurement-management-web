@@ -3,7 +3,7 @@ import { products } from '../const/products';
 import { productServices } from '../pages/api/serviceInitializer';
 
 class DataStore {
-  ItemList = products;
+  ItemList = null;
   ItemsPerPage = null;
   filteredItems = null;
   isLoading = false;
@@ -33,12 +33,36 @@ class DataStore {
     }
   }
 
+  async getAll() {
+    try {
+      this.setIsloading(true);
+      const response = await productServices.getAll();
+      this.ItemList = response.data;
+    } catch (error) {
+    } finally {
+      this.setIsloading(false);
+    }
+  }
+
+  async deleteProduct(id) {
+    try {
+      this.setIsloading(true);
+      const response = await productServices.deleteProduct(id);
+    } catch (error) {
+    } finally {
+      this.getAll();
+      this.setIsloading(false);
+    }
+  }
+
   filterItems(filter) {
     let Items = [];
     filter.forEach((keywords) => {
       this.ItemList.forEach((item) => {
-        if (item.categoris.id == keywords.value) {
-          Items.push(item);
+        if (item.categoris == {}) {
+          if (item.categoris.id == keywords.value) {
+            Items.push(item);
+          }
         }
       });
     });
@@ -46,7 +70,7 @@ class DataStore {
   }
 
   pages(page_number = 1) {
-    return this.ItemList.slice((page_number - 1) * 8, page_number * 8);
+    return this.ItemList?.slice((page_number - 1) * 8, page_number * 8);
   }
   pagesForFilter(page_number = 1) {
     if (this.filteredItems) {

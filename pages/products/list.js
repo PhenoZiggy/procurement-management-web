@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminPageLayout from '../../layouts/pagelayout/AdminLayout';
-import { products } from '../../const/products';
+import { observer } from 'mobx-react-lite';
+import { ItemsStore } from '../../store/storeInitialize';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ProductsListAdmin = () => {
-  const people = [
-    {
-      name: 'Lindsay Walton',
-      title: 'Front-end Developer',
-      department: 'Optimization',
-      email: 'lindsay.walton@example.com',
-      role: 'Member',
-      image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-  ];
+  const [products, setProducts] = useState();
+  const getAll = async () => {
+    try {
+      await ItemsStore.getAll();
+      setProducts(ItemsStore.ItemList);
+    } catch (error) {}
+  };
+
+  const deleteHandler = async (id) => {
+    try {
+      await ItemsStore.deleteProduct(id);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    if (!ItemsStore.ItemList) {
+      getAll();
+    }
+    setProducts(ItemsStore.ItemList);
+  }, [ItemsStore.ItemList]);
 
   return (
     <AdminPageLayout>
@@ -56,8 +67,8 @@ const ProductsListAdmin = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {products.map((item) => (
-                      <tr key={item.name}>
+                    {products?.map((item) => (
+                      <tr key={item._id}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">
                             <div className="h-10 w-10 flex-shrink-0">
@@ -85,8 +96,16 @@ const ProductsListAdmin = () => {
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Rs.{item.price}</td>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                           <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                            Edit<span className="sr-only"> {item.stock}</span>
+                            Edit
                           </a>
+                          <button
+                            className="px-4"
+                            onClick={() => {
+                              deleteHandler(item._id);
+                            }}
+                          >
+                            <DeleteIcon className="text-red-500 cursor-pointer" />
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -101,4 +120,4 @@ const ProductsListAdmin = () => {
   );
 };
 
-export default ProductsListAdmin;
+export default observer(ProductsListAdmin);

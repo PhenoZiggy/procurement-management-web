@@ -7,7 +7,7 @@ import Logo from '../../public/img/Shopify-Logo.png';
 import { userStore } from '../../store/storeInitialize';
 
 const Index = () => {
-  const [login, isLogin] = useState(false);
+  const [login, isLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');

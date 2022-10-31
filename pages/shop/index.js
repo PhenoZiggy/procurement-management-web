@@ -1,28 +1,39 @@
 import Banner from '../../components/banner/Banner';
-import { products } from '../../const/products';
 import PageLayout from '../../layouts/pagelayout/PageLayout';
 import ShopNow from '../../public/img/shopnow.png';
 import Products from '../../components/products/Products';
 import { useRouter } from 'next/router';
 import { ItemsStore } from '../../store/storeInitialize';
 import { Pagination } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 
-export default function Home() {
+const Index = () => {
   const handleChange = (event, value) => {
     setNumber(value);
   };
 
   const [number, setNumber] = useState(1);
   const Items = ItemsStore.pages(number);
-  const pages = ItemsStore.ItemList.length / 8;
+  const pages = ItemsStore.ItemList?.length / 8;
   const router = useRouter();
   const header = 'You can shop anything here';
   const content = 'Limitless Items to shop here';
+
+  const getAll = async () => {
+    try {
+      await ItemsStore.getAll();
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getAll();
+  }, []);
+
   return (
     <PageLayout>
       <div className="h-fit">
-        <Banner image={ShopNow} header={header} content={content}>
+        {/* <Banner image={ShopNow} header={header} content={content}>
           <button
             className="h-20 border border-red-400 px-10 hover:bg-red-300 duration-200 hover:scale-105 hover:shadow-lg"
             onClick={() => {
@@ -31,7 +42,7 @@ export default function Home() {
           >
             See Categories
           </button>
-        </Banner>
+        </Banner> */}
       </div>
       <div className="w-full flex flex-col items-center pb-10">
         <Products products={Items} />
@@ -39,4 +50,5 @@ export default function Home() {
       </div>
     </PageLayout>
   );
-}
+};
+export default observer(Index);

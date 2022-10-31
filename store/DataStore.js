@@ -27,7 +27,7 @@ class DataStore {
 
   addItem(item) {
     this.state = null;
-    if (!this.ItemList.find(({ id }) => id === item.id)) {
+    if (!this.ItemList.find(({ _id }) => _id === item._id)) {
       let newItem = item;
       newItem.count = 1;
       this.ItemList.push(newItem);

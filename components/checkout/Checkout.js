@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { CheckCircleIcon, TrashIcon } from '@heroicons/react/solid';
 import { observer } from 'mobx-react-lite';
-import {Store} from '../../store/storeInitialize';
+import { Store, userStore } from '../../store/storeInitialize';
+import { orderStore } from '../../store/storeInitialize';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 const paymentMethods = [
   { id: 1, title: 'Credit Card', turnaround: '4–10 business days', price: '$5.00' },
@@ -18,17 +21,73 @@ const Checkout = () => {
   const [products, setProducts] = useState(Store.ItemList);
   const [prices, setPrices] = useState({ subTotal: Store.itemTotal, total: Store.orderTotal });
   const [tax, setTax] = useState(Store.tax);
+  const [user, setUser] = useState(userStore.currentUser?.data.response);
+  const [shipping, setShippig] = useState();
+
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [apmnt, setApmnt] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [postal, setPostal] = useState('');
+  const [phone, setPhone] = useState('');
+  const [cardNo, setCardNo] = useState('');
+  const [nameCard, setNameCard] = useState('');
+
+  const router = useRouter();
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    const items = products.map((item) => {
+      return {
+        itemId: item._id,
+        quantity: item.count,
+      };
+    });
+    const ship = {
+      userId: user._id,
+      items: items,
+      userData: {
+        address: {
+          address: address,
+          apmnt: apmnt,
+          city: city,
+          state: state,
+          postal: postal,
+          phone: phone,
+        },
+        paymentMethod: {
+          type: paymentMethod.title,
+          data: {
+            cardNo: cardNo,
+            name: nameCard,
+          },
+        },
+      },
+    };
+    try {
+      await orderStore.placeOrder(ship);
+    } catch (error) {
+    } finally {
+      if (orderStore.response.status === 201) {
+        toast('Order has placed successfully');
+        router.push('/orders');
+      } else {
+        toast(orderStore.response?.data.message);
+      }
+    }
+  };
 
   return (
     <div className="bg-gray-50">
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="sr-only">Checkout</h2>
 
-        <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+        <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16" onSubmit={submitHandler}>
           <div>
             <div className="mt-10 border-t border-gray-200 pt-10">
               <h2 className="text-lg font-medium text-gray-900">Shipping information</h2>
-              <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+              <div className="mt-4 sm:gap-x-4">
                 <div>
                   <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
                     First name
@@ -40,21 +99,11 @@ const Checkout = () => {
                       name="first-name"
                       autoComplete="given-name"
                       className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
-                    Last name
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      id="last-name"
-                      name="last-name"
-                      autoComplete="family-name"
-                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setName(e.target.value);
+                      }}
+                      value={name}
                     />
                   </div>
                 </div>
@@ -70,6 +119,11 @@ const Checkout = () => {
                       id="address"
                       autoComplete="street-address"
                       className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setAddress(e.target.value);
+                      }}
+                      value={address}
                     />
                   </div>
                 </div>
@@ -84,6 +138,11 @@ const Checkout = () => {
                       name="apartment"
                       id="apartment"
                       className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setApmnt(e.target.value);
+                      }}
+                      value={apmnt}
                     />
                   </div>
                 </div>
@@ -99,6 +158,11 @@ const Checkout = () => {
                       id="city"
                       autoComplete="address-level2"
                       className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setCity(e.target.value);
+                      }}
+                      value={city}
                     />
                   </div>
                 </div>
@@ -114,6 +178,11 @@ const Checkout = () => {
                       id="region"
                       autoComplete="address-level1"
                       className="block py-2 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setState(e.target.value);
+                      }}
+                      value={state}
                     />
                   </div>
                 </div>
@@ -129,6 +198,11 @@ const Checkout = () => {
                       id="postal-code"
                       autoComplete="postal-code"
                       className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setPostal(e.target.value);
+                      }}
+                      value={postal}
                     />
                   </div>
                 </div>
@@ -144,6 +218,11 @@ const Checkout = () => {
                       id="phone"
                       autoComplete="tel"
                       className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setPhone(e.target.value);
+                      }}
+                      value={phone}
                     />
                   </div>
                 </div>
@@ -209,6 +288,11 @@ const Checkout = () => {
                       name="card-number"
                       autoComplete="cc-number"
                       className="block py-2 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setCardNo(e.target.value);
+                      }}
+                      value={cardNo}
                     />
                   </div>
                 </div>
@@ -224,6 +308,11 @@ const Checkout = () => {
                       name="name-on-card"
                       autoComplete="cc-name"
                       className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        setNameCard(e.target.value);
+                      }}
+                      value={nameCard}
                     />
                   </div>
                 </div>

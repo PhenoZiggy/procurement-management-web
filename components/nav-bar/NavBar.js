@@ -38,7 +38,11 @@ export default function NavBar() {
                 <Search />
               </div>
               <div className="h-16 md:h-20">
-                <Image src={Logo} layout="fill" objectFit="contain" alt="Logo" />
+                <img
+                  className="mx-auto h-16 md:h-16 py-2"
+                  src="https://img.icons8.com/external-kmg-design-flat-kmg-design/64/000000/external-excavator-transportation-kmg-design-flat-kmg-design.png"
+                  alt="logo"
+                />
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* Profile dropdown */}

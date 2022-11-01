@@ -75,7 +75,11 @@ const Index = () => {
                   <div className="lg:w-6/12 px-4 md:px-0">
                     <div className="md:p-12 md:mx-6">
                       <div className="text-center">
-                        <Image className="mx-auto w-48" width="150" height="100" src={Logo} alt="logo" />
+                        <img
+                          className="mx-auto w-20"
+                          src="https://img.icons8.com/external-kmg-design-flat-kmg-design/64/000000/external-excavator-transportation-kmg-design-flat-kmg-design.png"
+                          alt="logo"
+                        />
                         <h4 className="text-xl font-semibold mt-1 mb-12 pb-1">We are The Online Store Team</h4>
                       </div>
                       <form onSubmit={handleOnSubmit}>

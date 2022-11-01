@@ -5,14 +5,17 @@ class OrderStore {
   response = null;
   isLoading = false;
   orders = null;
+  allOrders = null;
 
   constructor() {
     makeObservable(this, {
       response: observable,
       isLoading: observable,
       orders: observable,
+      allOrders: observable,
       placeOrder: action,
       userOrders: action,
+      getAll: action,
       setLoading: action,
     });
   }
@@ -42,6 +45,26 @@ class OrderStore {
   }
   setLoading(value) {
     this.isLoading = value;
+  }
+  async updateStatus(id, status) {
+    try {
+      this.setLoading(true);
+      const response = await orderServices.updateStatus(id, status);
+    } catch (error) {
+    } finally {
+      this.setLoading(false);
+    }
+  }
+  async getAll() {
+    try {
+      this.setLoading(true);
+      const response = await orderServices.getAllOrders();
+      this.allOrders = response;
+    } catch (error) {
+      this.allOrders = error;
+    } finally {
+      this.setLoading(false);
+    }
   }
 }
 export default OrderStore;

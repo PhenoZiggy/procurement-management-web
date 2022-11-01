@@ -3,6 +3,7 @@ import AdminPageLayout from '../../layouts/pagelayout/AdminLayout';
 import { observer } from 'mobx-react-lite';
 import { ItemsStore } from '../../store/storeInitialize';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { BackspaceIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
 
 const ProductsListAdmin = () => {
   const [products, setProducts] = useState();
@@ -25,8 +26,17 @@ const ProductsListAdmin = () => {
     setProducts(ItemsStore.ItemList);
   }, [ItemsStore.ItemList]);
 
+  const navigation = [
+    { name: 'Add Products', href: '/products', icon: PlusIcon, current: false },
+    { name: 'Edit Products', href: 'list', icon: UsersIcon, current: true },
+    { name: 'Edit Orders', href: 'orders', icon: FolderIcon, current: false },
+    // { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+    // { name: 'Documents', href: '#', icon: InboxIcon, current: false },
+    // { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+  ];
+
   return (
-    <AdminPageLayout>
+    <AdminPageLayout navigation={navigation}>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">

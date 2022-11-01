@@ -10,6 +10,8 @@ class OrderServices {
     makeObservable(this, {
       placeOrder: action,
       getUserOrders: action,
+      updateStatus: action,
+      getAllOrders: action,
     });
   }
 
@@ -18,6 +20,12 @@ class OrderServices {
   }
   async getUserOrders() {
     return axiosInstance.get(`${this.baseURL}${this.endPointURL}/retrieve-user-ordders/`);
+  }
+  async updateStatus(id, status) {
+    return axiosInstance.put(`${this.baseURL}${this.endPointURL}/update-status`, { id: id, status: status });
+  }
+  async getAllOrders() {
+    return axiosInstance.get(`${this.baseURL}${this.endPointURL}/getall`);
   }
 }
 

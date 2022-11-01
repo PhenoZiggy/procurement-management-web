@@ -9,6 +9,9 @@ class ProductServices {
   constructor() {
     makeObservable(this, {
       addProduct: action,
+      getAll: action,
+      deleteProduct: action,
+      getOneProduct: action,
     });
   }
 
@@ -19,8 +22,10 @@ class ProductServices {
     return axios.get(`${this.baseURL}${this.endPointURL}/get-all/`);
   }
   async deleteProduct(id) {
-    console.log("test")
     return axios.delete(`${this.baseURL}${this.endPointURL}/delete/${id}`);
+  }
+  async getOneProduct(id) {
+    return axios.get(`${this.baseURL}${this.endPointURL}/get-by-id?id=${id}`);
   }
 }
 

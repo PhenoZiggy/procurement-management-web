@@ -8,15 +8,21 @@ class DataStore {
   filteredItems = null;
   isLoading = false;
   itemResponse = null;
+  product = null;
 
   constructor() {
     makeObservable(this, {
       ItemList: observable,
       isLoading: observable,
+      product: observable,
       filteredItems: observable,
       itemResponse: observable.deep,
       filterItems: action,
       pages: action,
+      getOneProduct: action,
+      addProduct: action,
+      getAll: action,
+      deleteProduct: action,
     });
   }
 
@@ -67,6 +73,17 @@ class DataStore {
       });
     });
     this.filteredItems = Items;
+  }
+
+  async getOneProduct() {
+    try {
+      this.setIsloading(true);
+      const response = await productServices.getOneProduct(id);
+      this.product = response;
+    } catch (error) {
+    } finally {
+      this.setIsloading(false);
+    }
   }
 
   pages(page_number = 1) {

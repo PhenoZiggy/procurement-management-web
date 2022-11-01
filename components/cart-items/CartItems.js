@@ -21,7 +21,7 @@ const CartItems = () => {
     if (userStore.currentUser) {
       return true;
     } else {
-      false;
+      return false;
     }
   };
   const router = useRouter();

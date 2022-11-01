@@ -13,7 +13,7 @@ export default function Home() {
     <PageLayout>
       <Banner image={building} header={header} content={content}>
         <button
-          className="h-20 border border-red-400 px-10 hover:bg-red-400 rounded-lg duration-200 hover:scale-105 hover:shadow-lg"
+          className="h-20 border border-yellow-600 px-10 text-xl text-black hover:text-white hover:bg-yellow-400 rounded-[54px] duration-200 hover:scale-105 hover:shadow-lg"
           onClick={() => {
             router.push('/shop');
           }}

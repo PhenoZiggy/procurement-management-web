@@ -8,7 +8,7 @@ const Banner = ({ image, header, content, children }) => {
         <div className="flex-1 ">
           <div className="h-full flex justify-center items-center">
             <div className="text-left w-72 space-y-10">
-              <h3 className="font-bold text-5xl">{header}</h3>
+              <h3 className="font-bold text-5xl text-black leading-snug">{header}</h3>
               <p className="">{content}</p>
               {children && children}
             </div>

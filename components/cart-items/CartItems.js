@@ -1,9 +1,10 @@
 import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
-import {Store} from '../../store/storeInitialize';
+import { Store, userStore } from '../../store/storeInitialize';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 const CartItems = () => {
   const [total, setTotal] = useState(Store.totalValue(10, 5));
@@ -16,6 +17,13 @@ const CartItems = () => {
   const removeItem = (item) => {
     Store.removeItem(item);
   };
+  const isLogged = () => {
+    if (userStore.currentUser) {
+      return true;
+    } else {
+      false;
+    }
+  };
   const router = useRouter();
 
   return (
@@ -26,7 +34,12 @@ const CartItems = () => {
           className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16"
           onSubmit={(e) => {
             e.preventDefault();
-            router.push('/checkout')
+            if (isLogged()) {
+              router.push('/checkout');
+            } else {
+              toast('Log in first');
+              router.push('/sign');
+            }
           }}
         >
           <section aria-labelledby="cart-heading" className="lg:col-span-7">

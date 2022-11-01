@@ -4,26 +4,28 @@ import { BackspaceIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxI
 import { observer } from 'mobx-react-lite';
 import { ItemsStore, userStore } from '../../store/storeInitialize';
 
-const navigation = [
-  { name: 'Add Products', href: '/products', icon: PlusIcon, current: true },
-  { name: 'Edit Products', href: 'products/list', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: InboxIcon, current: false },
-  { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const AdminPageLayout = ({ children }) => {
+const AdminPageLayout = ({ children, navigation }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userData, setUserData] = useState();
 
   const [loading, isLoading] = useState(false);
   useEffect(() => {
     isLoading(userStore.isLoading || ItemsStore.isLoading);
   }, [userStore.isLoading, ItemsStore.isLoading]);
+
+  useEffect(() => {
+    if (userStore.currentUser?.data) {
+      setUserData(userStore.currentUser.data.response);
+      console.log(userData?.image.url);
+    } else {
+      setUserData(null);
+    }
+    console.log(userData)
+  }, [userStore.currentUser]);
 
   return (
     <>
@@ -162,7 +164,7 @@ const AdminPageLayout = ({ children }) => {
                     />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm font-medium text-white">Tom Cook</p>
+                    <p className="text-sm font-medium text-white">{userStore.currentUser?.data?.response.name}</p>
                     <p className="text-xs font-medium text-indigo-200 group-hover:text-white">View profile</p>
                   </div>
                 </div>
@@ -193,7 +195,7 @@ const AdminPageLayout = ({ children }) => {
           </main>
         </div>
       </div>
-    </> 
+    </>
   );
 };
 export default observer(AdminPageLayout);

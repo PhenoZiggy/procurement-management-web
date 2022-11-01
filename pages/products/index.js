@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import AdminLayout from '../../layouts/pagelayout/AdminLayout';
 import { ItemsStore } from '../../store/storeInitialize';
 import firebaseUpload from '../../utils/firebaseUpload';
+import { BackspaceIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
 
 const Index = () => {
   const router = useRouter();
@@ -106,8 +107,17 @@ const Index = () => {
     }
   }, [ItemsStore.itemResponse]);
 
+  const navigation = [
+    { name: 'Add Products', href: '/products', icon: PlusIcon, current: true },
+    { name: 'Edit Products', href: 'products/list', icon: UsersIcon, current: false },
+    { name: 'Edit Orders', href: 'products/orders', icon: FolderIcon, current: false },
+    // { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+    // { name: 'Documents', href: '#', icon: InboxIcon, current: false },
+    // { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+  ];
+
   return (
-    <AdminLayout>
+    <AdminLayout navigation={navigation}>
       <form className="space-y-8 divide-y divide-gray-200" onSubmit={handleUpload}>
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div className="space-y-6 sm:space-y-5">

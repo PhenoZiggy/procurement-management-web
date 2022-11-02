@@ -38,15 +38,14 @@ const Index = () => {
       imageAlt: productName,
       categories: category,
     };
-    console.log(product);
     try {
       await ItemsStore.updateProduct(product);
     } catch (error) {
     } finally {
-      if (ItemsStore.product.updateRes == 200) {
-        toast('Updated Successfully');
+      if (ItemsStore.product.updateRes.status == 200) {
+        toast('Updated success', { hideProgressBar: true, autoClose: 2000, type: 'success' });
       } else {
-        toast('Something went Wrong');
+        toast('Something went wrong', { hideProgressBar: true, autoClose: 2000, type: 'error' });
       }
       setProductName('');
       setDescription('');

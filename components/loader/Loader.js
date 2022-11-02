@@ -11,7 +11,7 @@ const Loader = () => {
   }, [userStore.isLoading, ItemsStore.isLoading, orderStore.isLoading]);
 
   return (
-    <div className={`absolute w-screen h-screen overflow-hidden z-50 bg-[#ffffffa8] flex justify-center items-center ${!loading && 'hidden'}`}>
+    <div className={`fixed w-screen h-screen overflow-hidden z-50 bg-[#ffffffa8] flex justify-center items-center ${!loading && 'hidden'}`}>
       <Lottie loop animationData={loadingLottie} play style={{ width: 'auto', height: 'auto' }} />
     </div>
   );

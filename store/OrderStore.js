@@ -17,6 +17,7 @@ class OrderStore {
       userOrders: action,
       getAll: action,
       setLoading: action,
+      updateStatus: action,
     });
   }
   async placeOrder(order) {

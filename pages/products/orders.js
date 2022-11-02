@@ -38,6 +38,10 @@ const Orders = () => {
         break;
       case '4':
         setStatus(4);
+        break;
+      case '5':
+        setStatus(5);
+        break;
       default:
         break;
     }
@@ -46,6 +50,7 @@ const Orders = () => {
     if (orderid) {
       try {
         orderStore.updateStatus(orderid, status);
+        setOrderid(null);
       } catch (error) {
         console.error(error);
       }
@@ -58,22 +63,22 @@ const Orders = () => {
     } catch (error) {
       console.error(error);
     } finally {
-      console.log(toJS(orderStore.allOrders.data));
-
       if (orderStore.allOrders.status === 200) {
         setOrders(toJS(orderStore.allOrders.data));
       } else {
-        toast('Something went wrong');
+        toast('Something went Wrong', { hideProgressBar: true, autoClose: 2000, type: 'error' });
       }
-      console.log(orders);
     }
   };
 
   useEffect(() => {
-    if (!orderStore.orders) {
+    if (!orderStore.allOrders) {
       getUserOrders();
     }
-  }, []);
+    if (orderStore.allOrders) {
+      setOrders(toJS(orderStore.allOrders.data));
+    }
+  }, [orderStore.allOrders]);
   return (
     <AdminPageLayout navigation={navigation}>
       <div className="bg-gray-50">
@@ -82,7 +87,9 @@ const Orders = () => {
             <div key={product._id} className="mx-auto max-w-2xl pt-16 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
                 <div className="flex sm:items-baseline sm:space-x-4">
-                  <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #54879</h1>
+                  <h1 className={`text-2xl font-bold tracking-tight ${product.orderStatus == 5 ? 'text-red-600' : 'text-gray-900'} sm:text-3xl`}>
+                    {product.orderStatus == 5 ? `Cancelled Order #${product._id}` : `Order #${product._id}`}
+                  </h1>
                   <a href="#" className="hidden text-sm font-medium text-yellow-500 hover:text-yellow-400 sm:block">
                     View invoice
                     <span aria-hidden="true"> &rarr;</span>
@@ -105,7 +112,7 @@ const Orders = () => {
                 <h2 className="sr-only">Products purchased</h2>
 
                 <div className="space-y-8">
-                  <div key={product.id} className="border-t border-b border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
+                  <div key={product.id} className={`border-t border-b border-gray-200  ${product.orderStatus == 5 ? 'bg-red-200' : 'bg-white'}  shadow-sm sm:rounded-lg sm:border`}>
                     <div className="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
                       <div className="sm:flex lg:col-span-7">
                         <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-40 sm:w-40">
@@ -210,7 +217,7 @@ const Orders = () => {
                     <div className="max-w-lg">
                       <p className="text-sm text-gray-500">Set order status here</p>
                       <div className="mt-4 space-y-4">
-                        <div className="flex items-center">
+                        <div className="flex items-center cursor-pointer">
                           <input
                             id={product._id}
                             name="push-notifications"
@@ -222,11 +229,11 @@ const Orders = () => {
                             }}
                             className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-yellow-500"
                           />
-                          <label htmlFor="1" className="ml-3 block text-sm font-medium text-gray-700">
+                          <label htmlFor={product._id} className="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
                             Processing
                           </label>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center cursor-pointer">
                           <input
                             id={product._id}
                             name="push-notifications"
@@ -238,11 +245,11 @@ const Orders = () => {
                             }}
                             className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-yellow-500"
                           />
-                          <label htmlFor="2" className="ml-3 block text-sm font-medium text-gray-700">
+                          <label htmlFor={product._id} className="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
                             Shipping
                           </label>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center cursor-pointer">
                           <input
                             id={product._id}
                             name="push-notifications"
@@ -254,11 +261,11 @@ const Orders = () => {
                             }}
                             className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-yellow-500"
                           />
-                          <label htmlFor="3" className="ml-3 block text-sm font-medium text-gray-700">
+                          <label htmlFor={product._id} className="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
                             Shipped
                           </label>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center cursor-pointer">
                           <input
                             id={product._id}
                             name="push-notifications"
@@ -270,8 +277,24 @@ const Orders = () => {
                             }}
                             className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-yellow-500"
                           />
-                          <label htmlFor="4" className="ml-3 block text-sm font-medium text-gray-700">
+                          <label htmlFor={product._id} className="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
                             Delivered
+                          </label>
+                        </div>
+                        <div className="flex items-center cursor-pointer">
+                          <input
+                            id={product._id}
+                            name="push-notifications"
+                            type="radio"
+                            value="5"
+                            onChange={statusHandler}
+                            onClick={() => {
+                              setOrderid(product._id);
+                            }}
+                            className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-yellow-500"
+                          />
+                          <label htmlFor={product._id} className="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                            Cancel
                           </label>
                         </div>
                       </div>

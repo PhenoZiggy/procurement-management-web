@@ -75,11 +75,22 @@ class DataStore {
     this.filteredItems = Items;
   }
 
-  async getOneProduct() {
+  async getOneProduct(id) {
     try {
       this.setIsloading(true);
       const response = await productServices.getOneProduct(id);
       this.product = response;
+    } catch (error) {
+    } finally {
+      this.setIsloading(false);
+    }
+  }
+  async updateProduct(product) {
+    try {
+      this.setIsloading(true);
+      this.product.updateRes = null;
+      const response = await productServices.updateProduct(product);
+      this.product.updateRes = response;
     } catch (error) {
     } finally {
       this.setIsloading(false);

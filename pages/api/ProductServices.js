@@ -12,6 +12,7 @@ class ProductServices {
       getAll: action,
       deleteProduct: action,
       getOneProduct: action,
+      updateProduct: action,
     });
   }
 
@@ -26,6 +27,9 @@ class ProductServices {
   }
   async getOneProduct(id) {
     return axios.get(`${this.baseURL}${this.endPointURL}/get-by-id?id=${id}`);
+  }
+  async updateProduct(product) {
+    return axios.put(`${this.baseURL}${this.endPointURL}/update`, { product: product });
   }
 }
 

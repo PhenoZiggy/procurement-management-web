@@ -50,6 +50,7 @@ class OrderStore {
     try {
       this.setLoading(true);
       const response = await orderServices.updateStatus(id, status);
+      this.getAll();
     } catch (error) {
     } finally {
       this.setLoading(false);

@@ -44,7 +44,7 @@ const ProductsListAdmin = () => {
   ];
 
   return (
-    <AdminPageLayout navigation={navigation}>
+    <AdminPageLayout navigation={navigation} title='Product List'>
       <div className="px-4 sm:px-6 lg:px-8">
         <Modal opened={opened} onClose={() => setOpened(false)} title="Are you sure want to delete?">
           <button

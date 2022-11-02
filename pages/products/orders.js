@@ -80,7 +80,7 @@ const Orders = () => {
     }
   }, [orderStore.allOrders]);
   return (
-    <AdminPageLayout navigation={navigation}>
+    <AdminPageLayout navigation={navigation} title='User Orders'>
       <div className="bg-gray-50">
         {orders &&
           orders.map((product) => (

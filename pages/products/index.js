@@ -117,7 +117,7 @@ const Index = () => {
   ];
 
   return (
-    <AdminLayout navigation={navigation}>
+    <AdminLayout navigation={navigation} title='Add Product'>
       <form className="space-y-8 divide-y divide-gray-200" onSubmit={handleUpload}>
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div className="space-y-6 sm:space-y-5">

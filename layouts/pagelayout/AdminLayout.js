@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const AdminPageLayout = ({ children, navigation }) => {
+const AdminPageLayout = ({ children, navigation , title }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userData, setUserData] = useState();
 
@@ -24,7 +24,7 @@ const AdminPageLayout = ({ children, navigation }) => {
     } else {
       setUserData(null);
     }
-    console.log(userData)
+    console.log(userData);
   }, [userStore.currentUser]);
 
   return (
@@ -85,12 +85,12 @@ const AdminPageLayout = ({ children, navigation }) => {
                   </Transition.Child>
                   <div className="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                     <div className="flex flex-shrink-0 items-center px-4">
-                    <img
-                  className="mx-auto h-16 md:h-16 py-2"
-                  src="https://img.icons8.com/external-kmg-design-flat-kmg-design/64/000000/external-excavator-transportation-kmg-design-flat-kmg-design.png"
-                  alt="logo"
-                /> 
-                                    </div>
+                      <img
+                        className="mx-auto h-16 md:h-16 py-2"
+                        src="https://img.icons8.com/external-kmg-design-flat-kmg-design/64/000000/external-excavator-transportation-kmg-design-flat-kmg-design.png"
+                        alt="logo"
+                      />
+                    </div>
                     <nav className="mt-5 space-y-1 px-2">
                       {navigation.map((item) => (
                         <a
@@ -139,12 +139,12 @@ const AdminPageLayout = ({ children, navigation }) => {
           <div className="flex min-h-0 flex-1 flex-col bg-yellow-500">
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
-              <img
+                <img
                   className="mx-auto h-16 md:h-16 py-2"
                   src="https://img.icons8.com/external-kmg-design-flat-kmg-design/64/000000/external-excavator-transportation-kmg-design-flat-kmg-design.png"
                   alt="logo"
-                />              
-                </div>
+                />
+              </div>
               <nav className="mt-5 flex-1 space-y-1 px-2">
                 {navigation.map((item) => (
                   <a
@@ -189,14 +189,14 @@ const AdminPageLayout = ({ children, navigation }) => {
             >
               <span className="sr-only">Open sidebar</span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-</svg>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
             </button>
           </div>
           <main className="flex-1">
             <div className="py-6">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-                <h1 className="text-2xl font-semibold text-gray-900">Add Products</h1>
+                <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
               </div>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                 <div className="py-4">{children}</div>

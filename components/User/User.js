@@ -41,12 +41,17 @@ const User = () => {
     }
     if (userStore.currentUser?.data) {
       setUserData(userStore.currentUser.data.response);
-      const found = userData?.role.find((element) => element == 'admin');
-      setRole(found);
     } else {
       setUserData(null);
     }
   }, [userStore.currentUser, userStore.currentUser]);
+
+  useEffect(() => {
+    if (userData) {
+      const found = userData?.role.find((element) => element == 'admin');
+      setRole(found);
+    }
+  }, [userData]);
 
   return (
     <Menu as="div" className="relative ml-3">

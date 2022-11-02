@@ -13,6 +13,8 @@
     "@emotion/styled": "^11.10.4",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^1.0.6",
+    "@mantine/core": "^5.6.4",
+    "@mantine/hooks": "^5.6.4",
     "@mui/base": "^5.0.0-alpha.98",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.6",

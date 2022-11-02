@@ -15,10 +15,16 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (userStore.currentUser?.data) {
       setUser(userStore.currentUser?.data.response);
+    }
+  }, [userStore.currentUser]);
+
+  useEffect(() => {
+    if (user) {
       const found = user?.role.find((element) => element == 'admin');
       setRole(found);
     }
-  }, [userStore.currentUser]);
+  }, [user]);
+
   let allowed = true;
   if (router.pathname.startsWith('/products') && role !== 'admin') {
     allowed = false;
@@ -27,7 +33,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Loader />
-      <Component {...pageProps} />
+      <ComponentToRender {...pageProps} />
       <ToastContainer />
     </>
   );

@@ -58,7 +58,7 @@ const User = () => {
             </>
           )}
           {!userData && (
-            <div className="font-bold hover:scale-105 duration-300" onClick={routeToLogin}>
+            <div className="font-bold bg-yellow-500 hover:bg-yellow-400 rounded-md px-3 py-1.5 hover:scale-105 duration-300" onClick={routeToLogin}>
               Sign in
             </div>
           )}

@@ -46,7 +46,7 @@ const ProductsListAdmin = () => {
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+              className="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 sm:w-auto"
             >
               Add Product
             </button>
@@ -105,7 +105,7 @@ const ProductsListAdmin = () => {
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Rs.{item.price}</td>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                          <a href="#" className="text-yellow-600 hover:text-yellow-500">
                             Edit
                           </a>
                           <button

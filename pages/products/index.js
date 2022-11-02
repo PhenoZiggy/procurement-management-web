@@ -138,7 +138,7 @@ const Index = () => {
                         setProductName(e.target.value);
                       }}
                       value={productName}
-                      className="block py-2 w-full border border-gray-400 min-w-0 flex-1 rounded-none rounded-r-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block py-2 w-full border border-gray-400 min-w-0 flex-1 rounded-none rounded-r-md focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                     />
                   </div>
                 </div>
@@ -154,7 +154,7 @@ const Index = () => {
                     name="about"
                     rows={3}
                     required
-                    className="block p-3 w-full max-w-lg rounded-md border border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="block p-3 w-full max-w-lg rounded-md border border-gray-400 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                     defaultValue={''}
                     onChange={(e) => {
                       setDescription(e.target.value);
@@ -183,7 +183,7 @@ const Index = () => {
                       <div className="flex text-sm text-gray-600">
                         <label
                           htmlFor="file-upload"
-                          className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
+                          className="relative cursor-pointer rounded-md bg-white font-medium text-yellow-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-yellow-500 focus-within:ring-offset-2 hover:text-yellow-500"
                         >
                           <span>Upload a file</span>
                           <input id="file-upload" name="file-upload" className="sr-only" type="file" onChange={handleChange} required />
@@ -219,7 +219,7 @@ const Index = () => {
                     name="first-name"
                     id="first-name"
                     autoComplete="given-name"
-                    className="block w-full max-w-lg py-2  border-2 rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm"
+                    className="block w-full max-w-lg py-2  border-2 rounded-md border-gray-400 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:max-w-xs sm:text-sm"
                     onChange={(e) => {
                       setPrice(e.target.value);
                     }}
@@ -238,7 +238,7 @@ const Index = () => {
                     name="last-name"
                     id="last-name"
                     autoComplete="family-name"
-                    className="block w-full max-w-lg border border-gray-400 rounded-md py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm"
+                    className="block w-full max-w-lg border border-gray-400 rounded-md py-2 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:max-w-xs sm:text-sm"
                     onChange={(e) => {
                       setQuantity(e.target.value);
                     }}
@@ -270,7 +270,7 @@ const Index = () => {
                               type="radio"
                               value="1"
                               onChange={categoryHandler}
-                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-yellow-500"
                             />
                             <label htmlFor="1" className="ml-3 block text-sm font-medium text-gray-700">
                               Plants and Machinery
@@ -283,7 +283,7 @@ const Index = () => {
                               type="radio"
                               value="2"
                               onChange={categoryHandler}
-                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-yellow-400"
                             />
                             <label htmlFor="2" className="ml-3 block text-sm font-medium text-gray-700">
                               Products
@@ -296,7 +296,7 @@ const Index = () => {
                               type="radio"
                               value="3"
                               onChange={categoryHandler}
-                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              className="h-4 w-4 border-gray-300 text-yellow-600 focus:ring-yellow-500"
                             />
                             <label htmlFor="3" className="ml-3 block text-sm font-medium text-gray-700">
                               Industrial
@@ -309,7 +309,7 @@ const Index = () => {
                               type="radio"
                               value="4"
                               onChange={categoryHandler}
-                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-yellow-400"
                             />
                             <label htmlFor="4" className="ml-3 block text-sm font-medium text-gray-700">
                               Materials
@@ -329,13 +329,13 @@ const Index = () => {
           <div className="flex justify-end">
             <button
               type="button"
-              className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-yellow-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
             >
               Save
             </button>

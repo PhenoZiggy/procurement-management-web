@@ -81,7 +81,7 @@ const Index = () => {
               <div className="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
                 <div className="flex sm:items-baseline sm:space-x-4">
                   <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #54879</h1>
-                  <a href="#" className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block">
+                  <a href="#" className="hidden text-sm font-medium text-yellow-500 hover:text-yellow-400 sm:block">
                     View invoice
                     <span aria-hidden="true"> &rarr;</span>
                   </a>
@@ -92,7 +92,7 @@ const Index = () => {
                     March 22, 2021
                   </time>
                 </p>
-                <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:hidden">
+                <a href="#" className="text-sm font-medium text-yellow-500 hover:text-yellow-400 sm:hidden">
                   View invoice
                   <span aria-hidden="true"> &rarr;</span>
                 </a>
@@ -136,7 +136,7 @@ const Index = () => {
                             <dd className="mt-3 space-y-3 text-gray-500">
                               <p>{product.email}</p>
                               <p>{product.userData.address.phone}</p>
-                              <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                              <button type="button" className="font-medium text-yellow-500 hover:text-yellow-400">
                                 Edit
                               </button>
                             </dd>
@@ -152,13 +152,13 @@ const Index = () => {
                       </p>
                       <div className="mt-6" aria-hidden="true">
                         <div className="overflow-hidden rounded-full bg-gray-200">
-                          <div className="h-2 rounded-full bg-indigo-600" style={{ width: `calc((${product.orderStatus} * 2 + 1) / 8 * 100%)` }} />
+                          <div className="h-2 rounded-full bg-yellow-500" style={{ width: `calc((${product.orderStatus} * 2 + 1) / 8 * 100%)` }} />
                         </div>
                         <div className="mt-6 hidden grid-cols-4 text-sm font-medium text-gray-600 sm:grid">
-                          <div className="text-indigo-600">Order placed</div>
-                          <div className={classNames(product.step > 0 ? 'text-indigo-600' : '', 'text-center')}>Processing</div>
-                          <div className={classNames(product.step > 1 ? 'text-indigo-600' : '', 'text-center')}>Shipped</div>
-                          <div className={classNames(product.step > 2 ? 'text-indigo-600' : '', 'text-right')}>Delivered</div>
+                          <div className="text-yellow-500">Order placed</div>
+                          <div className={classNames(product.step > 0 ? 'text-yellow-600' : '', 'text-center')}>Processing</div>
+                          <div className={classNames(product.step > 1 ? 'text-yellow-600' : '', 'text-center')}>Shipped</div>
+                          <div className={classNames(product.step > 2 ? 'text-yellow-600' : '', 'text-right')}>Delivered</div>
                         </div>
                       </div>
                     </div>
@@ -219,7 +219,7 @@ const Index = () => {
                     </div>
                     <div className="flex items-center justify-between pt-4">
                       <dt className="font-medium text-gray-900">Order total</dt>
-                      <dd className="font-medium text-indigo-600">$83.16</dd>
+                      <dd className="font-medium text-yellow-500">$83.16</dd>
                     </div>
                   </dl>
                 </div>

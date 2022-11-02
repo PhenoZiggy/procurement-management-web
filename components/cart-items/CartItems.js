@@ -78,7 +78,7 @@ const CartItems = () => {
                         <select
                           id={`quantity-${productIdx}`}
                           name={`quantity-${productIdx}`}
-                          className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                          className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 sm:text-sm"
                           onChange={(e) => {
                             setQty(product, e.target.value);
                           }}
@@ -163,7 +163,7 @@ const CartItems = () => {
             <div className="mt-6">
               <button
                 type="submit"
-                className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                className="w-full rounded-md border border-transparent bg-yellow-500 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-50"
               >
                 Checkout Now
               </button>

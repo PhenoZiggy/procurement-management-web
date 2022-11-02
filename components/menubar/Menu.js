@@ -26,7 +26,7 @@ const Menu = () => {
           ))}
         </div>
       </div>
-      <div className="hover:scale-110 duration-200 cursor-pointer">
+      <div className="hover:scale-110 duration-200 cursor-pointer text-black">
         <Cart />
       </div>
     </div>

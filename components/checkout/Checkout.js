@@ -98,7 +98,7 @@ const Checkout = () => {
                       id="first-name"
                       name="first-name"
                       autoComplete="given-name"
-                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                       onChange={(e) => {
                         e.preventDefault();
                         setName(e.target.value);
@@ -118,7 +118,7 @@ const Checkout = () => {
                       name="address"
                       id="address"
                       autoComplete="street-address"
-                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                       onChange={(e) => {
                         e.preventDefault();
                         setAddress(e.target.value);
@@ -137,7 +137,7 @@ const Checkout = () => {
                       type="text"
                       name="apartment"
                       id="apartment"
-                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                       onChange={(e) => {
                         e.preventDefault();
                         setApmnt(e.target.value);
@@ -157,7 +157,7 @@ const Checkout = () => {
                       name="city"
                       id="city"
                       autoComplete="address-level2"
-                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                       onChange={(e) => {
                         e.preventDefault();
                         setCity(e.target.value);
@@ -177,7 +177,7 @@ const Checkout = () => {
                       name="region"
                       id="region"
                       autoComplete="address-level1"
-                      className="block py-2 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block py-2 w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                       onChange={(e) => {
                         e.preventDefault();
                         setState(e.target.value);
@@ -197,7 +197,7 @@ const Checkout = () => {
                       name="postal-code"
                       id="postal-code"
                       autoComplete="postal-code"
-                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                       onChange={(e) => {
                         e.preventDefault();
                         setPostal(e.target.value);
@@ -217,7 +217,7 @@ const Checkout = () => {
                       name="phone"
                       id="phone"
                       autoComplete="tel"
-                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                       onChange={(e) => {
                         e.preventDefault();
                         setPhone(e.target.value);
@@ -241,7 +241,7 @@ const Checkout = () => {
                       className={({ checked, active }) =>
                         classNames(
                           checked ? 'border-transparent' : 'border-gray-300',
-                          active ? 'ring-2 ring-indigo-500' : '',
+                          active ? 'ring-2 ring-yellow-500' : '',
                           'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none'
                         )
                       }
@@ -255,11 +255,11 @@ const Checkout = () => {
                               </RadioGroup.Label>
                             </span>
                           </span>
-                          {checked ? <CheckCircleIcon className="h-5 w-5 text-indigo-600" aria-hidden="true" /> : null}
+                          {checked ? <CheckCircleIcon className="h-5 w-5 text-yellow-500" aria-hidden="true" /> : null}
                           <span
                             className={classNames(
                               active ? 'border' : 'border-2',
-                              checked ? 'border-indigo-500' : 'border-transparent',
+                              checked ? 'border-yellow-500' : 'border-transparent',
                               'pointer-events-none absolute -inset-px rounded-lg'
                             )}
                             aria-hidden="true"
@@ -287,7 +287,7 @@ const Checkout = () => {
                       id="card-number"
                       name="card-number"
                       autoComplete="cc-number"
-                      className="block py-2 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block py-2 w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                       onChange={(e) => {
                         e.preventDefault();
                         setCardNo(e.target.value);
@@ -307,7 +307,7 @@ const Checkout = () => {
                       id="name-on-card"
                       name="name-on-card"
                       autoComplete="cc-name"
-                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                       onChange={(e) => {
                         e.preventDefault();
                         setNameCard(e.target.value);
@@ -327,7 +327,7 @@ const Checkout = () => {
                       name="expiration-date"
                       id="expiration-date"
                       autoComplete="cc-exp"
-                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full py-2 rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                     />
                   </div>
                 </div>
@@ -342,7 +342,7 @@ const Checkout = () => {
                       name="cvc"
                       id="cvc"
                       autoComplete="csc"
-                      className="block w-full py-2 first-letter:rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full py-2 first-letter:rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm"
                     />
                   </div>
                 </div>
@@ -405,7 +405,7 @@ const Checkout = () => {
               <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                 <button
                   type="submit"
-                  className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                  className="w-full rounded-md border border-transparent bg-yellow-500 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                 >
                   Confirm order
                 </button>

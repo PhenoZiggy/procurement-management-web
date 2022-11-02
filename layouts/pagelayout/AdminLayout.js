@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { BackspaceIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
+import { BarsIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
 import { observer } from 'mobx-react-lite';
 import { ItemsStore, userStore } from '../../store/storeInitialize';
 
@@ -62,7 +62,7 @@ const AdminPageLayout = ({ children, navigation }) => {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-indigo-700">
+                <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-yellow-600">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"
@@ -85,25 +85,29 @@ const AdminPageLayout = ({ children, navigation }) => {
                   </Transition.Child>
                   <div className="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                     <div className="flex flex-shrink-0 items-center px-4">
-                      <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300" alt="Your Company" />
-                    </div>
+                    <img
+                  className="mx-auto h-16 md:h-16 py-2"
+                  src="https://img.icons8.com/external-kmg-design-flat-kmg-design/64/000000/external-excavator-transportation-kmg-design-flat-kmg-design.png"
+                  alt="logo"
+                /> 
+                                    </div>
                     <nav className="mt-5 space-y-1 px-2">
                       {navigation.map((item) => (
                         <a
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            item.current ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75',
+                            item.current ? 'bg-yellow-600 text-white' : 'text-white hover:bg-yellow-500 hover:bg-opacity-75',
                             'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                           )}
                         >
-                          <item.icon className="mr-4 h-6 w-6 flex-shrink-0 text-indigo-300" aria-hidden="true" />
+                          <item.icon className="mr-4 h-6 w-6 flex-shrink-0 text-yellow-300" aria-hidden="true" />
                           {item.name}
                         </a>
                       ))}
                     </nav>
                   </div>
-                  <div className="flex flex-shrink-0 border-t border-indigo-800 p-4">
+                  <div className="flex flex-shrink-0 border-t border-yellow-800 p-4">
                     <a href="#" className="group block flex-shrink-0">
                       <div className="flex items-center">
                         <div>
@@ -115,7 +119,7 @@ const AdminPageLayout = ({ children, navigation }) => {
                         </div>
                         <div className="ml-3">
                           <p className="text-base font-medium text-white">Tom Cook</p>
-                          <p className="text-sm font-medium text-indigo-200 group-hover:text-white">View profile</p>
+                          <p className="text-sm font-medium text-yellow-100 group-hover:text-white">View profile</p>
                         </div>
                       </div>
                     </a>
@@ -132,28 +136,32 @@ const AdminPageLayout = ({ children, navigation }) => {
         {/* Static sidebar for desktop */}
         <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex min-h-0 flex-1 flex-col bg-indigo-700">
+          <div className="flex min-h-0 flex-1 flex-col bg-yellow-500">
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
-                <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300" alt="Your Company" />
-              </div>
+              <img
+                  className="mx-auto h-16 md:h-16 py-2"
+                  src="https://img.icons8.com/external-kmg-design-flat-kmg-design/64/000000/external-excavator-transportation-kmg-design-flat-kmg-design.png"
+                  alt="logo"
+                />              
+                </div>
               <nav className="mt-5 flex-1 space-y-1 px-2">
                 {navigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
                     className={classNames(
-                      item.current ? 'bg-indigo-800 text-white' : 'text-white hover:bg-indigo-600 hover:bg-opacity-75',
+                      item.current ? 'bg-yellow-600 text-white' : 'text-white hover:bg-yellow-300 hover:bg-opacity-75',
                       'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                     )}
                   >
-                    <item.icon className="mr-3 h-6 w-6 flex-shrink-0 text-indigo-300" aria-hidden="true" />
+                    <item.icon className="mr-3 h-6 w-6 flex-shrink-0 text-yellow-400" aria-hidden="true" />
                     {item.name}
                   </a>
                 ))}
               </nav>
             </div>
-            <div className="flex flex-shrink-0 border-t border-indigo-800 p-4">
+            <div className="flex flex-shrink-0 border-t border-yellow-800 p-4">
               <a href="#" className="group block w-full flex-shrink-0">
                 <div className="flex items-center">
                   <div>
@@ -165,7 +173,7 @@ const AdminPageLayout = ({ children, navigation }) => {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-white">{userStore.currentUser?.data?.response.name}</p>
-                    <p className="text-xs font-medium text-indigo-200 group-hover:text-white">View profile</p>
+                    <p className="text-xs font-medium text-yellow-100 group-hover:text-white">View profile</p>
                   </div>
                 </div>
               </a>
@@ -176,11 +184,13 @@ const AdminPageLayout = ({ children, navigation }) => {
           <div className="sticky top-0 z-10 bg-gray-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
             <button
               type="button"
-              className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-yellow-500"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
-              <BackspaceIcon className="h-6 w-6" aria-hidden="true" />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+</svg>
             </button>
           </div>
           <main className="flex-1">

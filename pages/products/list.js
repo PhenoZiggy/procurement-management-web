@@ -5,10 +5,13 @@ import { ItemsStore } from '../../store/storeInitialize';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { BackspaceIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
+import { Modal, Button, Group } from '@mantine/core';
 
 const ProductsListAdmin = () => {
   const router = useRouter();
   const [products, setProducts] = useState();
+  const [id, setID] = useState();
+  const [opened, setOpened] = useState(false);
   const getAll = async () => {
     try {
       await ItemsStore.getAll();
@@ -19,7 +22,10 @@ const ProductsListAdmin = () => {
   const deleteHandler = async (id) => {
     try {
       await ItemsStore.deleteProduct(id);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setID(null);
+    }
   };
   useEffect(() => {
     if (!ItemsStore.ItemList) {
@@ -40,6 +46,18 @@ const ProductsListAdmin = () => {
   return (
     <AdminPageLayout navigation={navigation}>
       <div className="px-4 sm:px-6 lg:px-8">
+        <Modal opened={opened} onClose={() => setOpened(false)} title="Are you sure want to delete?">
+          <button
+            onClick={() => {
+              deleteHandler(id);
+              setOpened(false);
+            }}
+            className="px-5 py-1 hover:bg-red-400 rounded-md bg-red-500 text-white font-medium"
+          >
+            Yes
+          </button>
+        </Modal>
+
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-xl font-semibold text-gray-900">Products</h1>
@@ -124,7 +142,8 @@ const ProductsListAdmin = () => {
                           <button
                             className="px-4"
                             onClick={() => {
-                              deleteHandler(item._id);
+                              setID(item._id);
+                              setOpened(true);
                             }}
                           >
                             <DeleteIcon className="text-red-500 cursor-pointer" />

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 import { userStore } from '../store/storeInitialize';
 
 let authToken;
@@ -30,6 +31,7 @@ axiosInstance.interceptors.request.use(async (req) => {
   } else {
     localStorage.clear();
     userStore.setError('Please Login');
+    toast('Please Login First', { hideProgressBar: true, autoClose: 2000, type: 'error' });
   }
 });
 

@@ -4,8 +4,10 @@ import { observer } from 'mobx-react-lite';
 import { ItemsStore } from '../../store/storeInitialize';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { BackspaceIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
+import { useRouter } from 'next/router';
 
 const ProductsListAdmin = () => {
+  const router = useRouter();
   const [products, setProducts] = useState();
   const getAll = async () => {
     try {
@@ -40,12 +42,15 @@ const ProductsListAdmin = () => {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Prpducts</h1>
+            <h1 className="text-xl font-semibold text-gray-900">Products</h1>
             <p className="mt-2 text-sm text-gray-700">A list of products with product details</p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <button
               type="button"
+              onClick={() => {
+                router.push('/products');
+              }}
               className="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 sm:w-auto"
             >
               Add Product
@@ -105,9 +110,17 @@ const ProductsListAdmin = () => {
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Rs.{item.price}</td>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <a href="#" className="text-yellow-600 hover:text-yellow-500">
+                          <button
+                            onClick={() => {
+                              router.push({
+                                pathname: 'edit',
+                                query: { id: item._id },
+                              });
+                            }}
+                            className="text-yellow-600 hover:text-yellow-500"
+                          >
                             Edit
-                          </a>
+                          </button>
                           <button
                             className="px-4"
                             onClick={() => {

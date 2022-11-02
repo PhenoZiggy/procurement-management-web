@@ -4,6 +4,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { observer } from 'mobx-react-lite';
 import { userStore } from '../../store/storeInitialize';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const User = () => {
   function classNames(...classes) {
@@ -79,9 +80,9 @@ const User = () => {
             {role == 'admin' && (
               <Menu.Item>
                 {({ active }) => (
-                  <a href="/products" className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
-                    Admin Dashboard
-                  </a>
+                  <Link href="/products">
+                    <span className={classNames(active ? 'bg-gray-100' : '', 'block px-4 hover:bg-white cursor-pointer py-2 text-sm text-gray-700')}> Admin Dashboard</span>
+                  </Link>
                 )}
               </Menu.Item>
             )}

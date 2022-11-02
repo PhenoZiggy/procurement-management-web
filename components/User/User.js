@@ -4,6 +4,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { observer } from 'mobx-react-lite';
 import { userStore } from '../../store/storeInitialize';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const User = () => {
   function classNames(...classes) {
@@ -11,6 +12,7 @@ const User = () => {
   }
   const router = useRouter();
   const [userData, setUserData] = useState();
+  const [role, setRole] = useState('user');
 
   const routeToLogin = () => {
     router.push('/sign');
@@ -39,11 +41,11 @@ const User = () => {
     }
     if (userStore.currentUser?.data) {
       setUserData(userStore.currentUser.data.response);
-      console.log(userData?.image.url);
+      const found = userData?.role.find((element) => element == 'admin');
+      setRole(found);
     } else {
       setUserData(null);
     }
-    
   }, [userStore.currentUser, userStore.currentUser]);
 
   return (
@@ -75,6 +77,16 @@ const User = () => {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 z-30 mt-2 w-48 origin-top-right rounded-md bg-yellow-200 py-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+            {role == 'admin' && (
+              <Menu.Item>
+                {({ active }) => (
+                  <Link href="/products">
+                    <span className={classNames(active ? 'bg-gray-100' : '', 'block px-4 hover:bg-white cursor-pointer py-2 text-sm text-gray-700')}> Admin Dashboard</span>
+                  </Link>
+                )}
+              </Menu.Item>
+            )}
+
             <Menu.Item>
               {({ active }) => (
                 <a href="#" className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>

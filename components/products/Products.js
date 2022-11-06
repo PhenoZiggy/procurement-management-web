@@ -13,14 +13,13 @@ const Products = ({ products, header }) => {
 
         <div className="mt-8 grid grid-cols-1 gap-y-24 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
           {products?.map((product) => (
-            <div key={product.id}>
+            <div key={product._id}>
               <div className="relative group min-h-full">
                 <div className="relative h-72 w-full overflow-hidden rounded-lg">
                   <img
                     src={product.imageSrc}
                     alt={product.imageAlt}
                     className="h-full w-full object-cover object-center group-hover:scale-105 duration-200"
-                    objectFit="fill"
                     layout="fill"
                   />
                 </div>
@@ -30,7 +29,7 @@ const Products = ({ products, header }) => {
                 </div>
                 <div className="absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
                   <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50" />
-                  <p className="relative text-lg font-semibold text-white">${product.price}</p>
+                  <p className="relative text-lg font-semibold text-white">Rs.{product.price}</p>
                 </div>
               </div>
               <div className="mt-6">

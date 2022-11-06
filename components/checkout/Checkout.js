@@ -40,8 +40,8 @@ const Checkout = () => {
     event.preventDefault();
     const items = products.map((item) => {
       return {
-        itemId: item._id,
-        quantity: item.count,
+        id: item._id,
+        amount: item.count,
       };
     });
     const ship = {
@@ -71,6 +71,7 @@ const Checkout = () => {
     } finally {
       if (orderStore.response.status === 201) {
         toast('Order has placed successfully');
+        Store.ItemList = [];
         router.push('/orders');
       } else {
         toast(orderStore.response?.data.message);

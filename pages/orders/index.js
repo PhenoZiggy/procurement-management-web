@@ -1,45 +1,10 @@
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PageLayout from '../../layouts/pagelayout/PageLayout';
 import { ItemsStore, orderStore } from '../../store/storeInitialize';
-
-const products = [
-  {
-    id: 1,
-    name: 'Nomad Tumbler',
-    description: 'This durable and portable insulated tumbler will keep your beverage at the perfect temperature during your next adventure.',
-    href: '#',
-    price: '35.00',
-    status: 'Preparing to ship',
-    step: 2,
-    date: 'March 24, 2021',
-    datetime: '2021-03-24',
-    address: ['Floyd Miles', '7363 Cynthia Pass', 'Toronto, ON N3Y 4H8'],
-    email: 'f•••@example.com',
-    phone: '1•••••••••40',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/confirmation-page-03-product-01.jpg',
-    imageAlt: 'Insulated bottle with white base and black snap lid.',
-  },
-  {
-    id: 2,
-    name: 'Nomad Tumbler',
-    description: 'This durable and portable insulated tumbler will keep your beverage at the perfect temperature during your next adventure.',
-    href: '#',
-    price: '35.00',
-    status: 'Preparing to ship',
-    step: 2,
-    date: 'March 24, 2021',
-    datetime: '2021-03-24',
-    address: ['Floyd Miles', '7363 Cynthia Pass', 'Toronto, ON N3Y 4H8'],
-    email: 'f•••@example.com',
-    phone: '1•••••••••40',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/confirmation-page-03-product-01.jpg',
-    imageAlt: 'Insulated bottle with white base and black snap lid.',
-  },
-  // More products...
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -59,7 +24,8 @@ const Index = () => {
       console.error(error);
     } finally {
       if (orderStore.orders.status === 200) {
-        setOrders(toJS(orderStore.orders.data.response));
+        setOrders(toJS(orderStore.orders.data));
+        console.log(toJS(orderStore.orders.data));
       } else {
         toast('Something went wrong');
       }
@@ -72,15 +38,27 @@ const Index = () => {
     }
   }, []);
 
+  const calAmount = (val, val2) => {
+    return val * val2;
+  };
+
+  const totalAmount = (obj) => {
+    let total = 0;
+    obj.productsWithAmount.map((data) => {
+      total = total + data?.amount * data?.price;
+    });
+    return total;
+  };
+
   return (
     <PageLayout>
       <div className="bg-gray-50">
         {orders &&
           orders.map((product) => (
-            <div key={product.id} className="mx-auto max-w-2xl pt-16 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div key={product._id} className="mx-auto max-w-2xl pt-16 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
                 <div className="flex sm:items-baseline sm:space-x-4">
-                  <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #54879</h1>
+                  <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #{product._id.substring(0, 6)}</h1>
                   <a href="#" className="hidden text-sm font-medium text-yellow-500 hover:text-yellow-400 sm:block">
                     View invoice
                     <span aria-hidden="true"> &rarr;</span>
@@ -89,7 +67,7 @@ const Index = () => {
                 <p className="text-sm text-gray-600">
                   Order placed
                   <time dateTime="2021-03-22" className="font-medium text-gray-900">
-                    March 22, 2021
+                    <span className="px-1"> {moment(product.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</span>
                   </time>
                 </p>
                 <a href="#" className="text-sm font-medium text-yellow-500 hover:text-yellow-400 sm:hidden">
@@ -105,19 +83,23 @@ const Index = () => {
                 <div className="space-y-8">
                   <div key={product.id} className="border-t border-b border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
                     <div className="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
-                      <div className="sm:flex lg:col-span-7">
-                        <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-40 sm:w-40">
-                          <img src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center sm:h-full sm:w-full" />
-                        </div>
+                      {product.productsWithAmount?.map((item) => (
+                        <div className="sm:flex lg:col-span-7 py-2" key={item?._id}>
+                          <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-40 sm:w-40">
+                            <img src={item?.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center sm:h-full sm:w-full" />
+                          </div>
 
-                        <div className="mt-6 sm:mt-0 sm:ml-6">
-                          <h3 className="text-base font-medium text-gray-900">
-                            <a href={product.href}>{product.name}</a>
-                          </h3>
-                          <p className="mt-2 text-sm font-medium text-gray-900">${product.price}</p>
-                          <p className="mt-3 text-sm text-gray-500">{product.description}</p>
+                          <div className="mt-6 sm:mt-0 sm:ml-6">
+                            <h3 className="text-base font-medium text-gray-900">
+                              <span>{item?.name}</span>
+                            </h3>
+                            <p className="mt-2 text-sm font-medium text-gray-900">
+                              Rs.{item?.price} x {item?.amount} = {calAmount(item?.price, item?.amount)}
+                            </p>
+                            <p className="mt-3 text-sm text-gray-500">{product.description}</p>
+                          </div>
                         </div>
-                      </div>
+                      ))}
 
                       <div className="mt-6 lg:col-span-5 lg:mt-0">
                         <dl className="grid grid-cols-2 gap-x-6 text-sm">
@@ -205,21 +187,9 @@ const Index = () => {
                   </dl>
 
                   <dl className="mt-8 divide-y divide-gray-200 text-sm lg:col-span-5 lg:mt-0">
-                    <div className="flex items-center justify-between pb-4">
-                      <dt className="text-gray-600">Subtotal</dt>
-                      <dd className="font-medium text-gray-900">$72</dd>
-                    </div>
-                    <div className="flex items-center justify-between py-4">
-                      <dt className="text-gray-600">Shipping</dt>
-                      <dd className="font-medium text-gray-900">$5</dd>
-                    </div>
-                    <div className="flex items-center justify-between py-4">
-                      <dt className="text-gray-600">Tax</dt>
-                      <dd className="font-medium text-gray-900">$6.16</dd>
-                    </div>
                     <div className="flex items-center justify-between pt-4">
                       <dt className="font-medium text-gray-900">Order total</dt>
-                      <dd className="font-medium text-yellow-500">$83.16</dd>
+                      <dd className="font-medium text-yellow-500">Rs.{totalAmount(product)}</dd>
                     </div>
                   </dl>
                 </div>

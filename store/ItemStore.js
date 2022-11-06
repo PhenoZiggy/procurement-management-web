@@ -64,9 +64,9 @@ class DataStore {
   filterItems(filter) {
     let Items = [];
     filter.forEach((keywords) => {
-      this.ItemList.forEach((item) => {
-        if (item.categoris == {}) {
-          if (item.categoris.id == keywords.value) {
+      this.ItemList?.forEach((item) => {
+        if (item.categories?.id) {
+          if (item.categories.id == keywords.value) {
             Items.push(item);
           }
         }

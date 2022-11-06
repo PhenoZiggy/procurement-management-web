@@ -25,7 +25,6 @@ const Index = () => {
     } finally {
       if (orderStore.orders.status === 200) {
         setOrders(toJS(orderStore.orders.data));
-        console.log(toJS(orderStore.orders.data));
       } else {
         toast('Something went wrong');
       }

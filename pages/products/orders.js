@@ -3,8 +3,9 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AdminPageLayout from '../../layouts/pagelayout/AdminLayout';
-import { ItemsStore, orderStore } from '../../store/storeInitialize';
-import { BackspaceIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
+import { orderStore } from '../../store/storeInitialize';
+import moment from 'moment';
+import { FolderIcon, UsersIcon, PlusIcon } from '@heroicons/react/outline';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -79,8 +80,21 @@ const Orders = () => {
       setOrders(toJS(orderStore.allOrders.data));
     }
   }, [orderStore.allOrders]);
+
+  const calAmount = (val, val2) => {
+    return val * val2;
+  };
+
+  const totalAmount = (obj) => {
+    let total = 0;
+    obj.productsWithAmount.map((data) => {
+      total = total + data?.amount * data?.price;
+    });
+    return total;
+  };
+
   return (
-    <AdminPageLayout navigation={navigation} title='User Orders'>
+    <AdminPageLayout navigation={navigation} title="User Orders">
       <div className="bg-gray-50">
         {orders &&
           orders.map((product) => (
@@ -98,7 +112,7 @@ const Orders = () => {
                 <p className="text-sm text-gray-600">
                   Order placed
                   <time dateTime="2021-03-22" className="font-medium text-gray-900">
-                    March 22, 2021
+                    <span className="px-1"> {moment(product.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</span>
                   </time>
                 </p>
                 <a href="#" className="text-sm font-medium text-yellow-600 hover:text-yellow-500 sm:hidden">
@@ -114,19 +128,23 @@ const Orders = () => {
                 <div className="space-y-8">
                   <div key={product.id} className={`border-t border-b border-gray-200  ${product.orderStatus == 5 ? 'bg-red-200' : 'bg-white'}  shadow-sm sm:rounded-lg sm:border`}>
                     <div className="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
-                      <div className="sm:flex lg:col-span-7">
-                        <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-40 sm:w-40">
-                          <img src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center sm:h-full sm:w-full" />
-                        </div>
+                      {product.productsWithAmount?.map((item) => (
+                        <div className="sm:flex lg:col-span-7 py-2" key={item?._id}>
+                          <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-40 sm:w-40">
+                            <img src={item?.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center sm:h-full sm:w-full" />
+                          </div>
 
-                        <div className="mt-6 sm:mt-0 sm:ml-6">
-                          <h3 className="text-base font-medium text-gray-900">
-                            <a href={product.href}>{product.name}</a>
-                          </h3>
-                          <p className="mt-2 text-sm font-medium text-gray-900">${product.price}</p>
-                          <p className="mt-3 text-sm text-gray-500">{product.description}</p>
+                          <div className="mt-6 sm:mt-0 sm:ml-6">
+                            <h3 className="text-base font-medium text-gray-900">
+                              <span>{item?.name}</span>
+                            </h3>
+                            <p className="mt-2 text-sm font-medium text-gray-900">
+                              Rs.{item?.price} x {item?.amount} = {calAmount(item?.price, item?.amount)}
+                            </p>
+                            <p className="mt-3 text-sm text-gray-500">{product.description}</p>
+                          </div>
                         </div>
-                      </div>
+                      ))}
 
                       <div className="mt-6 lg:col-span-5 lg:mt-0">
                         <dl className="grid grid-cols-2 gap-x-6 text-sm">
@@ -156,9 +174,7 @@ const Orders = () => {
 
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6 lg:p-8">
                       <h4 className="sr-only">Status</h4>
-                      <p className="text-sm font-medium text-gray-900">
-                        {product.status} on <time dateTime={product.datetime}>{product.date}</time>
-                      </p>
+                      <dd className="font-medium text-yellow-700">Rs.{totalAmount(product)}</dd>
                       <div className="mt-6" aria-hidden="true">
                         <div className="overflow-hidden rounded-full bg-gray-200">
                           <div className="h-2 rounded-full bg-yellow-500" style={{ width: `calc((${product.orderStatus} * 2 + 1) / 8 * 100%)` }} />
@@ -211,6 +227,7 @@ const Orders = () => {
                         </div>
                       </dd>
                     </div>
+                    <div></div>
                   </dl>
 
                   <div className="sm:col-span-2 py-5">

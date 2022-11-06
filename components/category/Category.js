@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { ItemsStore } from '../../store/storeInitialize';
 import CheckList from './CheckList';
 import { Pagination } from '@mui/material';
+import { Store } from '@mui/icons-material';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -28,6 +29,12 @@ const Category = () => {
     const Items = ItemsStore.pagesForFilter(number);
     setProducts(Items);
   }, [select, number]);
+
+  useEffect(() => {
+    if (!ItemsStore.ItemList) {
+      ItemsStore.getAll();
+    }
+  }, []);
 
   return (
     <div className="bg-white">

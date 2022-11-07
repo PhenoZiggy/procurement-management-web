@@ -58,7 +58,7 @@ axiosInstance.interceptors.response.use(
         .catch((error) => {
           if (error?.response?.status === 401) {
             userStore.setError('Token not Provided! Please Login Again!');
-          } else if (error.response.status === 403) {
+          } else if (error.response?.status === 403) {
             userStore.setError('Provided token is wrong or expired! Please Login Again!');
           }
         });

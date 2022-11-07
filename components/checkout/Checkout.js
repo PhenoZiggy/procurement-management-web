@@ -95,6 +95,7 @@ const Checkout = () => {
                   </label>
                   <div className="mt-1">
                     <input
+                    required
                       type="text"
                       id="first-name"
                       name="first-name"
@@ -115,6 +116,7 @@ const Checkout = () => {
                   </label>
                   <div className="mt-1">
                     <input
+                    required
                       type="text"
                       name="address"
                       id="address"
@@ -214,6 +216,7 @@ const Checkout = () => {
                   </label>
                   <div className="mt-1">
                     <input
+                    required
                       type="text"
                       name="phone"
                       id="phone"

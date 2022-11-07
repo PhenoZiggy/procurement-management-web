@@ -94,9 +94,9 @@ const User = () => {
 
             <Menu.Item>
               {({ active }) => (
-                <a href="#" className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
-                  Your Profile
-                </a>
+                  <Link href="/profile">
+                  <span className={classNames(active ? 'bg-gray-100' : '', 'block px-4 hover:bg-white cursor-pointer py-2 text-sm text-gray-700')}> My Profile</span>
+                </Link>
               )}
             </Menu.Item>
             <Menu.Item>

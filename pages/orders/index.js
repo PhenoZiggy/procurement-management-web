@@ -57,7 +57,9 @@ const Index = () => {
             <div key={product._id} className="mx-auto max-w-2xl pt-16 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
               <div className="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
                 <div className="flex sm:items-baseline sm:space-x-4">
-                  <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Order #{product._id.substring(0, 6)}</h1>
+                  <h1 className={`text-2xl font-bold tracking-tight ${product.orderStatus == 5 ? 'text-red-600' : 'text-gray-900'} sm:text-3xl`}>
+                    {product.orderStatus == 5 ? `Cancelled Order #${product._id.substring(0, 10)}` : `Order #${product._id.substring(0, 10)}`}
+                  </h1>
                   <a href="#" className="hidden text-sm font-medium text-yellow-500 hover:text-yellow-400 sm:block">
                     View invoice
                     <span aria-hidden="true"> &rarr;</span>
@@ -80,7 +82,7 @@ const Index = () => {
                 <h2 className="sr-only">Products purchased</h2>
 
                 <div className="space-y-8">
-                  <div key={product.id} className="border-t border-b border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
+                  <div key={product.id} className={`border-t border-b border-gray-200  ${product.orderStatus == 5 ? 'bg-red-200' : 'bg-white'}  shadow-sm sm:rounded-lg sm:border`}>
                     <div className="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
                       {product.productsWithAmount?.map((item) => (
                         <div className="sm:flex lg:col-span-7 py-2" key={item?._id}>

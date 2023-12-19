@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import Home from './index';
+import Script from 'next/script';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -32,6 +33,19 @@ function MyApp({ Component, pageProps }) {
   const ComponentToRender = allowed ? Component : Home;
   return (
     <>
+    <Script
+    strategy='afterInteractive'
+    src="https://www.googletagmanager.com/gtag/js?id=G-6YQPN4XX9C"/>
+    <Script id="google-analytics" strategy='afterInteractive'>
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', 'G-6YQPN4XX9C');
+        `}
+      </Script>
+
       <Loader />
       <ComponentToRender {...pageProps} />
       <ToastContainer />
